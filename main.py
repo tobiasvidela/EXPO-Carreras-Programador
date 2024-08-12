@@ -80,7 +80,7 @@ def dibujar_menu():
   # Cargar la imagen del título
   imagen_titulo = pygame.image.load('img/LOGO-UNViMe-BLANCO-PIE.png')
   imagen_rect = imagen_titulo.get_rect()
-  imagen_rect.center = (ANCHO // 2, 80)
+  imagen_rect.center = (ANCHO // 2, 75)
   pantalla.blit(imagen_titulo, imagen_rect)
 
   # Dibujar botones con imágenes
@@ -120,6 +120,14 @@ def juego5():
 while True:
   
   boton1_rect, boton2_rect, boton3_rect, boton4_rect, boton5_rect = dibujar_menu()
+
+  pos_mouse = pygame.mouse.get_pos()
+
+  if boton1_rect.collidepoint(pos_mouse) or boton2_rect.collidepoint(pos_mouse) or boton3_rect.collidepoint(pos_mouse) or boton4_rect.collidepoint(pos_mouse) or boton5_rect.collidepoint(pos_mouse):
+    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Cambiar a cursor "manito"
+  else:
+    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
+
 
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
