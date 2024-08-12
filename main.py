@@ -1,4 +1,4 @@
-import pygame, sys, os, random
+import pygame, sys, os, random, webbrowser
 
 # Inicializar Pygame
 pygame.init()
@@ -55,6 +55,10 @@ nombre_j4 = "Juego 4"
 # Lógica del juego 5
 nombre_j5 = "Juego 5"
 
+# Cargar la imagen del título
+logo_UNViMe = pygame.image.load('img/LOGO-UNViMe-BLANCO-PIE.png')
+logo_UNViMe_rect = logo_UNViMe.get_rect()
+
 # Cargar y redimensionar las imágenes para los botones
 botones_ancho, botones_alto = 120, 120
 boton_juego1 = pygame.image.load('img/boton_juego1.png')
@@ -77,16 +81,13 @@ boton_juego5 = pygame.transform.scale(boton_juego5, (botones_ancho, botones_alto
 def dibujar_menu():
   pantalla.fill(NEGRO)
 
-  # Cargar la imagen del título
-  imagen_titulo = pygame.image.load('img/LOGO-UNViMe-BLANCO-PIE.png')
-  imagen_rect = imagen_titulo.get_rect()
-  imagen_rect.center = (ANCHO // 2, 75)
-  pantalla.blit(imagen_titulo, imagen_rect)
+  logo_UNViMe_rect.center = (ANCHO // 2, 75)
+  pantalla.blit(logo_UNViMe, logo_UNViMe_rect)
 
   # Dibujar botones con imágenes
   boton1_rect = pantalla.blit(boton_juego1, (ANCHO // 5 - boton_juego1.get_width() // 2, 175))
   boton2_rect = pantalla.blit(boton_juego2, (ANCHO // 2 - boton_juego2.get_width() // 2, 175))
-  boton3_rect = pantalla.blit(boton_juego3, (ANCHO -(ANCHO // 5) - boton_juego1.get_width() // 2, 175))
+  boton3_rect = pantalla.blit(boton_juego3, (ANCHO - (ANCHO // 5) - boton_juego1.get_width() // 2, 175))
   boton4_rect = pantalla.blit(boton_juego4, (ANCHO // 3 - boton_juego4.get_width() // 2, 325))
   boton5_rect = pantalla.blit(boton_juego5, (ANCHO - (ANCHO // 3) - boton_juego5.get_width() // 2, 325))
 
@@ -123,7 +124,7 @@ while True:
 
   pos_mouse = pygame.mouse.get_pos()
 
-  if boton1_rect.collidepoint(pos_mouse) or boton2_rect.collidepoint(pos_mouse) or boton3_rect.collidepoint(pos_mouse) or boton4_rect.collidepoint(pos_mouse) or boton5_rect.collidepoint(pos_mouse):
+  if boton1_rect.collidepoint(pos_mouse) or boton2_rect.collidepoint(pos_mouse) or boton3_rect.collidepoint(pos_mouse) or boton4_rect.collidepoint(pos_mouse) or boton5_rect.collidepoint(pos_mouse) or logo_UNViMe_rect.collidepoint(pos_mouse):
     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Cambiar a cursor "manito"
   else:
     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
@@ -149,4 +150,7 @@ while True:
       elif boton5_rect.collidepoint(event.pos):
         jugando = True
         juego5()
+      elif logo_UNViMe_rect.collidepoint(event.pos):
+        webbrowser.open('https://www.unvime.edu.ar')
+        print("Logo clickeado, abriendo página web...")
   pygame.display.update()
