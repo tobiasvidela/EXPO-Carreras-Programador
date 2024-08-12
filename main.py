@@ -55,6 +55,23 @@ nombre_j4 = "Juego 4"
 # Lógica del juego 5
 nombre_j5 = "Juego 5"
 
+# Cargar y redimensionar las imágenes para los botones
+botones_ancho, botones_alto = 120, 120
+boton_juego1 = pygame.image.load('img/boton_juego1.png')
+boton_juego1 = pygame.transform.scale(boton_juego1, (botones_ancho, botones_alto))
+
+boton_juego2 = pygame.image.load('img/boton_juego2.png')
+boton_juego2 = pygame.transform.scale(boton_juego2, (botones_ancho, botones_alto))
+
+boton_juego3 = pygame.image.load('img/boton_juego3.png')
+boton_juego3 = pygame.transform.scale(boton_juego3, (botones_ancho, botones_alto))
+
+boton_juego4 = pygame.image.load('img/boton_juego4.png')
+boton_juego4 = pygame.transform.scale(boton_juego4, (botones_ancho, botones_alto))
+
+boton_juego5 = pygame.image.load('img/boton_juego5.png')
+boton_juego5 = pygame.transform.scale(boton_juego5, (botones_ancho, botones_alto))
+
 
 # Función para dibujar el menú
 def dibujar_menu():
@@ -62,35 +79,20 @@ def dibujar_menu():
 
   # Cargar la imagen del título
   imagen_titulo = pygame.image.load('img/LOGO-UNViMe-BLANCO-PIE.png')
-  
-  # Obtener el tamaño de la imagen
   imagen_rect = imagen_titulo.get_rect()
-  
-  # Colocar la imagen centrada en la parte superior
   imagen_rect.center = (ANCHO // 2, 80)
-  
-  # Dibujar la imagen en la pantalla
   pantalla.blit(imagen_titulo, imagen_rect)
 
-  #titulo = fuente.render("Elige un juego:", True, BLANCO)
-  #pantalla.blit(titulo, (ANCHO // 2 - titulo.get_width() // 2, 50))
-
-  juego1 = fuente.render("1. {0}".format(nombre_j1), True, BLANCO) # Repetir este formato para los demás
-  pantalla.blit(juego1, (ANCHO // 2 - juego1.get_width() // 2, 180))
-
-  juego2 = fuente.render("2. {0}".format(nombre_j2), True, BLANCO)
-  pantalla.blit(juego2, (ANCHO // 2 - juego2.get_width() // 2, 230))
-
-  juego3 = fuente.render("3. {0}".format(nombre_j3), True, BLANCO)
-  pantalla.blit(juego3, (ANCHO // 2 - juego3.get_width() // 2, 280))
-
-  juego4 = fuente.render("4. {0}".format(nombre_j4), True, BLANCO)
-  pantalla.blit(juego4, (ANCHO // 2 - juego4.get_width() // 2, 330))
-
-  juego5 = fuente.render("5. {0}".format(nombre_j5), True, BLANCO)
-  pantalla.blit(juego5, (ANCHO // 2 - juego5.get_width() // 2, 380))
+  # Dibujar botones con imágenes
+  boton1_rect = pantalla.blit(boton_juego1, (ANCHO // 5 - boton_juego1.get_width() // 2, 175))
+  boton2_rect = pantalla.blit(boton_juego2, (ANCHO // 2 - boton_juego2.get_width() // 2, 175))
+  boton3_rect = pantalla.blit(boton_juego3, (ANCHO -(ANCHO // 5) - boton_juego1.get_width() // 2, 175))
+  boton4_rect = pantalla.blit(boton_juego4, (ANCHO // 3 - boton_juego4.get_width() // 2, 325))
+  boton5_rect = pantalla.blit(boton_juego5, (ANCHO - (ANCHO // 3) - boton_juego5.get_width() // 2, 325))
 
   pygame.display.flip()
+
+  return boton1_rect, boton2_rect, boton3_rect, boton4_rect, boton5_rect
 
 # Funciones para manejar la lógica de arrancar los juegos
 def juego1():
@@ -117,27 +119,26 @@ def juego5():
 # Bucle principal
 while True:
   
-  dibujar_menu()
+  boton1_rect, boton2_rect, boton3_rect, boton4_rect, boton5_rect = dibujar_menu()
 
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       pygame.quit()
       sys.exit()
-    if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_1:
+    if event.type == pygame.MOUSEBUTTONDOWN:
+      if boton1_rect.collidepoint(event.pos):
         jugando = True
         juego1()
-      elif event.key == pygame.K_2:
+      elif boton2_rect.collidepoint(event.pos):
         jugando = True
         juego2()
-      elif event.key == pygame.K_3:
+      elif boton3_rect.collidepoint(event.pos):
         jugando = True
         juego3()
-      elif event.key == pygame.K_4:
+      elif boton4_rect.collidepoint(event.pos):
         jugando = True
         juego4()
-      elif event.key == pygame.K_5:
+      elif boton5_rect.collidepoint(event.pos):
         jugando = True
         juego5()
-
   pygame.display.update()
