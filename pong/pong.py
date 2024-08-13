@@ -23,6 +23,8 @@ YELLOW = (255, 255, 0)
 # VENTANA
 ANCHO, ALTO = 800, 400
 pantalla = pygame.display.set_mode((ANCHO, ALTO))
+pong_icon = pygame.image.load('pong/img/pong_icon.png')
+pygame.display.set_icon(pong_icon)
 pygame.display.set_caption("PONG!")
 
 # TIMER
