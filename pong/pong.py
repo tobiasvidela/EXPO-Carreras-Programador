@@ -43,6 +43,7 @@ framerate = 200
 #   PONG variables
 # Jugadores
 player_ancho, player_alto = 15, 100
+player_speed = 2
 p1_x, p1_y = 0, 0
 p2_x, p2_y = 0, 0
 distancia_borde = 50
@@ -80,16 +81,16 @@ while jugando:
 
   if keys_pressed[pygame.K_w]:
     if p1.top > 0:
-      p1.top -= 2
+      p1.top -= player_speed
   if keys_pressed[pygame.K_s]:
     if p1.bottom < ALTO:
-      p1.bottom += 2
+      p1.bottom += player_speed
   if keys_pressed[pygame.K_UP]:
     if p2.top > 0:
-      p2.top -= 2
+      p2.top -= player_speed
   if keys_pressed[pygame.K_DOWN]:
     if p2.bottom < ALTO:
-      p2.bottom += 2
+      p2.bottom += player_speed
   if keys_pressed[pygame.K_ESCAPE]:
     jugando = False
     # Reset window size and caption
@@ -107,26 +108,28 @@ while jugando:
     y_speed = 1
     pygame.mixer.Sound.play(hit)
   # "Gol"
-  if ball.x == 0 - ball.width / 2:
+  gol = False
+  if ball.x <= 0 - ball.width / 2:
     pygame.mixer.Sound.play(point)
+    gol = True
     p1_score += 1
-    ball.center = (ANCHO / 2, ALTO / 2)
-    pygame.time.delay(700)
-    x_speed, y_speed = random.choice([1, -1]), random.choice([1, -1])
-  if ball.x == ANCHO - ball.width / 2:
+  if ball.x >= ANCHO - ball.width / 2:
     pygame.mixer.Sound.play(point)
+    gol = True
     p2_score += 1
-    ball.center = (ANCHO / 2, ALTO / 2)
-    pygame.time.delay(700)
+    
+  if gol:
+    pygame.time.delay(900)
+    ball.center = (ANCHO / 2 - ball_ancho / 2, ALTO / 2 - - ball_alto / 2)
     x_speed, y_speed = random.choice([1, -1]), random.choice([1, -1])
   
   # Rebote con jugador
   if p1.x - ball.width <= ball.x <= p1.right and ball.y in range(p1.top - ball.width, p1.bottom + ball.width):
     pygame.mixer.Sound.play(hit)
-    x_speed = -1
+    x_speed = 1
   if p2.x - ball.width <= ball.x <= p2.right and ball.y in range(p2.top - ball.width, p2.bottom + ball.width):
     pygame.mixer.Sound.play(hit)
-    x_speed = 1
+    x_speed = -1
   
   p1_score_text = fuente.render(str(p1_score), True, BLANCO)
   p2_score_text = fuente.render(str(p2_score), True, BLANCO)
@@ -151,7 +154,7 @@ while jugando:
     # Loading screen
     pygame.time.delay(1000)
     p1_score, p2_score = 0, 0
-    p1.center = (ANCHO - distancia_borde, ALTO / 2)
-    p2.center = (distancia_borde , ALTO / 2)
+    p1.center = (distancia_borde , ALTO / 2)
+    p2.center = (ANCHO - distancia_borde, ALTO / 2)
 
   pygame.display.flip()
