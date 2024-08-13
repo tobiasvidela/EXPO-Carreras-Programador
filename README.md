@@ -9,7 +9,6 @@ Este proyecto consiste en el desarrollo de una serie de juegos en Python, diseñ
   - **[Nombre del Juego 2]**: Breve descripción del juego 2.
   - **[Nombre del Juego 3]**: Breve descripción del juego 3.
   - **[Nombre del Juego 4]**: Breve descripción del juego 4.
-  - **[Nombre del Juego 5]**: Breve descripción del juego 5.
 
 ## Colaboradores
 Este proyecto está siendo desarrollado por un equipo de 5 programadores:
@@ -20,6 +19,16 @@ Este proyecto está siendo desarrollado por un equipo de 5 programadores:
   - Tobías Uriel Videla Guliotti
 
 ## Guía para Colaboradores
+
+### Descargar los cambios
+1. **Conectar con el repositorio**: Antes hacer un `pull`, primero hay que concectarse al repositorio.
+``` bash
+git remote add origin "enlace"
+```
+2. **Hacer el `pull`**: Copiar todos los cambios de la rama `main` a tu repositorio local.
+``` bash
+git pull origin main
+```
 
 ### Crear una Rama para Desarrollar un Juego
 1. **Actualizar el repositorio local**: Antes de comenzar a trabajar, asegúrate de que tu repositorio local esté actualizado con la última versión en `main`.
@@ -68,11 +77,7 @@ Cada vez que trabajes en el proyecto, asegúrate de:
 git checkout main
 git pull origin main
 ```
-2. Mantener tu rama de trabajo actualizada con `main`.
-``` bash
-git checkout nombre_de_la_rama
-git merge main
-```
+2. *Consultar con los demás colaboradores*.
 ## Contribuir
 
 Si deseas contribuir al proyecto, por favor sigue la guía de colaboradores descrita anteriormente. Asegúrate de que tu código esté bien documentado y de seguir las buenas prácticas de programación.
