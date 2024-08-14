@@ -5,7 +5,7 @@
 
 Este proyecto consiste en el desarrollo de una serie de juegos en Python, diseñados para demostrar lo que se puede aprender en la carrera de programación. Estos juegos están pensados para ser presentados en la exposición de carreras de nuestra institución y despertar el interés en la programación.
 ## Juegos Incluidos
-  - **[Nombre del Juego 1]**: Breve descripción del juego 1.
+  - **MEMORAMA**: El memorama es un juego que desafía la memoria de los jugadores. El objetivo es encontrar pares de cartas iguales. Los jugadores deben voltear dos cartas en cada turno, intentando recordar la ubicación de las cartas para hacer coincidir los pares. El juego continúa hasta que todos los pares han sido encontrados.Es un excelente ejercicio para mejorar la memoria y la concentración, además de ser divertido y fácil de aprender.
   - **[Nombre del Juego 2]**: Breve descripción del juego 2.
   - **[Nombre del Juego 3]**: Breve descripción del juego 3.
   - **[Nombre del Juego 4]**: Breve descripción del juego 4.
