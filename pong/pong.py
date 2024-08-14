@@ -54,7 +54,7 @@ p2 = pygame.Rect(p2_x, p2_y, player_ancho, player_alto)
 p2.center = (ANCHO - distancia_borde, ALTO / 2)
 
 p1_score, p2_score = 0, 0
-max_score = 3
+max_score = 10
 
 # Pelota
 ball_ancho, ball_alto = 10, 10
