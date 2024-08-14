@@ -260,31 +260,54 @@ def Pong2P(jugando):
 
     pygame.display.flip()
 
-# MENU DEL JUEGO
+#   MENU DEL JUEGO
+# Botones del menu de Pong
+botones_ancho, botones_alto = 300, 300
+button_1P = pygame.image.load('pong/img/button_1P.png')
+button_1P = pygame.transform.scale(button_1P, (botones_ancho, botones_alto))
+
+button_2P = pygame.image.load('pong/img/button_2P.png')
+button_2P = pygame.transform.scale(button_2P, (botones_ancho, botones_alto))
+
+button_salir = pygame.image.load('pong/img/button_salir.png')
+button_salir = pygame.transform.scale(button_salir, (50, 50))
+
 def dibujar_menu():
   pantalla.fill(NEGRO)
-  titulo = fuente.render("Elige el modo de juego", True, BLANCO)
-  pantalla.blit(titulo, (ANCHO // 2 - titulo.get_width() // 2, ALTO // 4))
   
-  opcion1 = fuente.render("1. Single Player", True, BLANCO)
-  pantalla.blit(opcion1, (ANCHO // 2 - opcion1.get_width() // 2, ALTO // 2 - 30))
-  
-  opcion2 = fuente.render("2. Two Players", True, BLANCO)
-  pantalla.blit(opcion2, (ANCHO // 2 - opcion2.get_width() // 2, ALTO // 2 + 30))
-  
-  opcion3 = fuente.render("3. Volver", True, BLANCO)
-  pantalla.blit(opcion3, (ANCHO // 2 - opcion3.get_width() // 2, ALTO // 2 + 90))
+  boton1P_rect = pantalla.blit(button_1P, (ANCHO // 2 - button_1P.get_width() * 1.05, ALTO // 2 - button_1P.get_height() // 2))
+  boton2P_rect = pantalla.blit(button_2P, (ANCHO // 2 + button_2P.get_width() * 0.05, ALTO // 2 - button_1P.get_height() // 2))
+  boton_salir_rect = pantalla.blit(button_salir, (button_salir.get_width() // 5, button_salir.get_height() // 5))
   
   pygame.display.flip()
 
-def runPong(jugando, menu):
+  return boton1P_rect, boton2P_rect, boton_salir_rect
+
+def runPong(jugando, menu = True):
   while menu:
-    dibujar_menu()
+    boton1P_rect, boton2P_rect, boton_salir_rect = dibujar_menu()
+
+    pos_mouse = pygame.mouse.get_pos()
+
+    if boton1P_rect.collidepoint(pos_mouse) or boton2P_rect.collidepoint(pos_mouse) or boton_salir_rect.collidepoint(pos_mouse):
+      pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Cambiar a cursor "manito"
+    else:
+      pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
 
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         pygame.quit()
         sys.exit()
+      if event.type == pygame.MOUSEBUTTONDOWN:
+        if boton1P_rect.collidepoint(event.pos):
+          jugando = True
+          Pong1P(jugando)
+        elif boton2P_rect.collidepoint(event.pos):
+          jugando = True
+          Pong2P(jugando)
+        elif boton_salir_rect.collidepoint(event.pos):
+          menu = False
+    
       if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_1:
           jugando = True
@@ -292,9 +315,9 @@ def runPong(jugando, menu):
         elif event.key == pygame.K_2:
           jugando = True
           Pong2P(jugando)
-        elif event.key == pygame.K_3:
+        elif event.key == pygame.K_ESCAPE:
           menu = False
 
     pygame.display.update()
 
-runPong(jugando, True)
+#runPong(jugando)
