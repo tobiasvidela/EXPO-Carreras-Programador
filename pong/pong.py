@@ -4,7 +4,7 @@ import pygame, sys, random
 pygame.init()
 
 # VARIABLES GLOBALES
-jugando = True
+#jugando = True
 
 # COLORES
 NEGRO = (0, 0, 0)
@@ -65,8 +65,8 @@ ball.center = (ANCHO / 2 - ball_ancho / 2, ALTO / 2 - - ball_alto / 2)
 x_speed, y_speed = 1, 1
 
 def Pong1P(jugando):
-
   pong_screen = pygame.display.set_mode((ANCHO, ALTO))
+  pygame.display.set_caption("PONG! - 1P")
 
   # reset
   p1.center = (distancia_borde , ALTO / 2)
@@ -97,7 +97,7 @@ def Pong1P(jugando):
         
     if keys_pressed[pygame.K_ESCAPE]:
       jugando = False
-      # Reset window size and caption
+      pygame.display.set_caption("Pong!")
 
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -165,6 +165,7 @@ def Pong1P(jugando):
 
 def Pong2P(jugando):
   pong_screen = pygame.display.set_mode((ANCHO, ALTO))
+  pygame.display.set_caption("PONG! - 2P")
 
   # reset
   p1.center = (distancia_borde , ALTO / 2)
@@ -194,7 +195,7 @@ def Pong2P(jugando):
         p2.bottom += player_speed
     if keys_pressed[pygame.K_ESCAPE]:
       jugando = False
-      # Reset window size and caption
+      pygame.display.set_caption("Pong!")
 
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -274,6 +275,9 @@ button_salir = pygame.transform.scale(button_salir, (50, 50))
 
 def dibujar_menu():
   pantalla.fill(NEGRO)
+  pong_icon = pygame.image.load('pong/img/pong_icon.png')
+  pygame.display.set_icon(pong_icon)
+  pygame.display.set_caption("PONG!")
   
   boton1P_rect = pantalla.blit(button_1P, (ANCHO // 2 - button_1P.get_width() * 1.05, ALTO // 2 - button_1P.get_height() // 2))
   boton2P_rect = pantalla.blit(button_2P, (ANCHO // 2 + button_2P.get_width() * 0.05, ALTO // 2 - button_1P.get_height() // 2))
@@ -283,7 +287,9 @@ def dibujar_menu():
 
   return boton1P_rect, boton2P_rect, boton_salir_rect
 
-def runPong(jugando, menu = True):
+def runPong(jugando, main_ancho, main_alto, menu = True):
+  pantalla = pygame.display.set_mode((ANCHO, ALTO))
+
   while menu:
     boton1P_rect, boton2P_rect, boton_salir_rect = dibujar_menu()
 
@@ -317,6 +323,10 @@ def runPong(jugando, menu = True):
           Pong2P(jugando)
         elif event.key == pygame.K_ESCAPE:
           menu = False
+          pantalla = pygame.display.set_mode((main_ancho, main_alto))
+          icono = pygame.image.load('img/ESCUDO-UNViMe.png')
+          pygame.display.set_icon(icono)
+          pygame.display.set_caption("Expo Carreras - Programación")
 
     pygame.display.update()
 

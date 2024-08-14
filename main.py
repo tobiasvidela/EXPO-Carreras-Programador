@@ -1,6 +1,7 @@
 import pygame, sys, os, random, webbrowser
 
 # imports de funciones que inician los juegos
+from pong.pong import runPong
 
 # Inicializar Pygame
 pygame.init()
@@ -119,7 +120,8 @@ while True:
         # juegoNICO()
       elif boton4_rect.collidepoint(event.pos):
         jugando = True
-        # juegoTOBI()
+        runPong(jugando, ANCHO, ALTO)
+        print("Running Pong")
       elif logo_UNViMe_rect.collidepoint(event.pos):
         webbrowser.open('https://www.unvime.edu.ar')
         print("Logo clickeado, abriendo página web...")
