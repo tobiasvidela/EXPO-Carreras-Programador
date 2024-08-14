@@ -64,7 +64,8 @@ git pull origin main
 ```
 3. **Revisar los cambios antes de hacer `merge`**: Antes de hacer `git merge nombre_de_la_rama`, asegurarse de revisar los cambios con `git diff` para asegurar que se está fusionando solo lo que realmente se desea.
 ``` bash
-git diff
+git checkout nombre_de_la_rama
+git diff main
 ```
 4. **Hacer merge**: Haz un merge de la rama en `main`. Asegúrate de resolver cualquier conflicto que pueda surgir.
 ``` bash
