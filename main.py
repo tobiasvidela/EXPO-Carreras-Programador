@@ -1,10 +1,6 @@
 import pygame, sys, os, random, webbrowser
 
 # imports de funciones que inician los juegos
-# import del juego BRAIAM
-# import del juego EZE y MARTI
-# import del juego NICO
-# import del juego TOBI
 
 # Inicializar Pygame
 pygame.init()
@@ -115,19 +111,15 @@ while True:
       if boton1_rect.collidepoint(event.pos):
         jugando = True
         # juegoBRAIAM()
-
       elif boton2_rect.collidepoint(event.pos):
         jugando = True
         # juegoEZEyMARTI()
-
       elif boton3_rect.collidepoint(event.pos):
         jugando = True
         # juegoNICO()
-
       elif boton4_rect.collidepoint(event.pos):
         jugando = True
         # juegoTOBI()
-
       elif logo_UNViMe_rect.collidepoint(event.pos):
         webbrowser.open('https://www.unvime.edu.ar')
         print("Logo clickeado, abriendo página web...")
