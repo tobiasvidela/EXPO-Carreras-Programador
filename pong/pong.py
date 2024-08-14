@@ -38,7 +38,7 @@ fuente = pygame.font.SysFont('Consolas', int(ANCHO/20))
 
 # TIMER
 timer = pygame.time.Clock()
-framerate = 200
+framerate = 300
 
 #   PONG variables
 # Jugadores
@@ -124,10 +124,10 @@ while jugando:
     x_speed, y_speed = random.choice([1, -1]), random.choice([1, -1])
   
   # Rebote con jugador
-  if p1.x - ball.width <= ball.x <= p1.right and ball.y in range(p1.top - ball.width, p1.bottom + ball.width):
+  if p1.colliderect(ball) and x_speed < 0:
     pygame.mixer.Sound.play(hit)
     x_speed = 1
-  if p2.x - ball.width <= ball.x <= p2.right and ball.y in range(p2.top - ball.width, p2.bottom + ball.width):
+  if p2.colliderect(ball) and x_speed > 0:
     pygame.mixer.Sound.play(hit)
     x_speed = -1
   
