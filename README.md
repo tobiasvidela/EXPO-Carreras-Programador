@@ -62,11 +62,15 @@ git checkout main
 ``` bash
 git pull origin main
 ```
-3. **Hacer merge**: Haz un merge de la rama en `main`. Asegúrate de resolver cualquier conflicto que pueda surgir.
+3. **Revisar los cambios antes de hacer `merge`**: Antes de hacer `git merge nombre_de_la_rama`, asegurarse de revisar los cambios con `git diff` para asegurar que se está fusionando solo lo que realmente se desea.
+``` bash
+git diff
+```
+4. **Hacer merge**: Haz un merge de la rama en `main`. Asegúrate de resolver cualquier conflicto que pueda surgir.
 ``` bash
 git merge nombre_de_la_rama
 ```
-4. **Push de `main` actualizado**: Finalmente, sube los cambios fusionados a GitHub.
+5. **Push de `main` actualizado**: Finalmente, sube los cambios fusionados a GitHub.
 ``` bash
 git push origin main
 ```
