@@ -7,7 +7,7 @@ Este proyecto consiste en el desarrollo de una serie de juegos en Python, diseñ
 ## Juegos Incluidos
   - **[Nombre del Juego 1]**: Breve descripción del juego 1.
   - **[Nombre del Juego 2]**: Breve descripción del juego 2.
-  - **[Nombre del Juego 3]**: Breve descripción del juego 3.
+  - **Esquivando parciales**: intenta terminar la carrera sin rendir parciales.
   - **[Nombre del Juego 4]**: Breve descripción del juego 4.
 
 ## Colaboradores
