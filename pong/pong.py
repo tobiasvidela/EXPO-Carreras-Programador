@@ -4,7 +4,7 @@ import pygame, sys, random
 pygame.init()
 
 # VARIABLES GLOBALES
-#jugando = True
+jugando = True
 
 # COLORES
 NEGRO = (0, 0, 0)
@@ -329,15 +329,7 @@ def runPong(jugando, main_ancho, main_alto, menu = True):
           Pong2P(jugando)
         elif boton_salir_rect.collidepoint(event.pos):
           menu = False
-          pantalla = pygame.display.set_mode((main_ancho, main_alto))
-          icono = pygame.image.load('img/ESCUDO-UNViMe.png')
-          pygame.display.set_icon(icono)
-          pygame.display.set_caption("Expo Carreras - Programación")
-          pygame.mixer.music.unload()
-          pygame.mixer.music.load('./music/bg-music-2.mp3')
-          pygame.mixer.music.play()
           print("Stopping Pong")
-    
       if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_1:
           jugando = True
@@ -347,15 +339,9 @@ def runPong(jugando, main_ancho, main_alto, menu = True):
           Pong2P(jugando)
         elif event.key == pygame.K_ESCAPE:
           menu = False
-          pantalla = pygame.display.set_mode((main_ancho, main_alto))
-          icono = pygame.image.load('img/ESCUDO-UNViMe.png')
-          pygame.display.set_icon(icono)
-          pygame.display.set_caption("Expo Carreras - Programación")
-          pygame.mixer.music.unload()
-          pygame.mixer.music.load('./music/bg-music-2.mp3')
-          pygame.mixer.music.play()
           print("Stopping Pong")
 
     pygame.display.update()
 
-#runPong(jugando)
+if __name__ == "__name__":
+  runPong(jugando, ANCHO, ALTO)

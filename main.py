@@ -135,6 +135,13 @@ while True:
         jugando = True
         print("Running Pong")
         runPong(jugando, ANCHO, ALTO)
+        pantalla = pygame.display.set_mode((ANCHO, ALTO))
+        icono = pygame.image.load('img/ESCUDO-UNViMe.png')
+        pygame.display.set_icon(icono)
+        pygame.display.set_caption("Expo Carreras - Programación")
+        pygame.mixer.music.unload()
+        pygame.mixer.music.load('./music/bg-music-2.mp3')
+        pygame.mixer.music.play()
       elif logo_UNViMe_rect.collidepoint(event.pos):
         webbrowser.open('https://www.unvime.edu.ar')
         print("Logo clickeado, abriendo página web...")
