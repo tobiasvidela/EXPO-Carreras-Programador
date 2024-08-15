@@ -40,6 +40,18 @@ fuente = pygame.font.SysFont('Consolas', int(ANCHO/20))
 timer = pygame.time.Clock()
 framerate = 300
 
+#   MENU DEL JUEGO
+# Botones del menu de Pong
+botones_ancho, botones_alto = 300, 300
+button_1P = pygame.image.load('pong/img/button_1P.svg')
+button_1P = pygame.transform.scale(button_1P, (botones_ancho + 100, botones_alto + 100))
+
+button_2P = pygame.image.load('pong/img/button_2P.png')
+button_2P = pygame.transform.scale(button_2P, (botones_ancho, botones_alto))
+
+button_salir = pygame.image.load('pong/img/button_salir.png')
+button_salir = pygame.transform.scale(button_salir, (50, 50))
+
 #   PONG variables
 # Jugadores
 player_ancho, player_alto = 15, 100
@@ -54,18 +66,23 @@ p2 = pygame.Rect(p2_x, p2_y, player_ancho, player_alto)
 p2.center = (ANCHO - distancia_borde, ALTO / 2)
 
 p1_score, p2_score = 0, 0
-max_score = 10
+max_score = 3
 
 # Pelota
 ball_ancho, ball_alto = 10, 10
 ball_x, ball_y = 0, 0
 ball = pygame.Rect(ball_x, ball_y, ball_ancho, ball_alto)
-ball.center = (ANCHO / 2 - ball_ancho / 2, ALTO / 2 - - ball_alto / 2)
+ball.center = (ANCHO / 2 - ball_ancho / 2, ALTO / 2 - ball_alto / 2)
 
 x_speed, y_speed = 1, 1
 
-def arrancar_musica() -> None:
+def arrancar_musica():
   pygame.mixer.music.play(loops=-1, fade_ms=150)
+
+def cargar_musica():
+  pygame.mixer.music.unload()
+  pygame.mixer.music.load('./music/bg-music-3.mp3')
+  pygame.mixer.music.set_volume(0.5)
 
 def set_ventana_pong(modo: str) -> pygame.display:
   caption = "PONG! - " + modo
@@ -74,15 +91,39 @@ def set_ventana_pong(modo: str) -> pygame.display:
   pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
   return pong_screen
 
+def dibujar_menu():
+  pantalla.fill(NEGRO)
+  pong_icon = pygame.image.load('pong/img/pong_icon.png')
+  pygame.display.set_icon(pong_icon)
+  pygame.display.set_caption("PONG!")
+  
+  boton1P_rect = pantalla.blit(button_1P, (ANCHO // 2 - button_1P.get_width() * 0.80, ALTO // 2 - button_1P.get_height() * 0.35))
+  boton2P_rect = pantalla.blit(button_2P, (ANCHO // 2 + button_2P.get_width() * 0.05, ALTO // 2 - button_2P.get_height() * 0.5))
+  boton_salir_rect = pantalla.blit(button_salir, (button_salir.get_width() // 5, button_salir.get_height() // 5))
+  
+  pygame.display.flip()
+
+  return boton1P_rect, boton2P_rect, boton_salir_rect
+
+def update_cursor(pos_mouse, *args: pygame.image):
+  # El cursor está en el estado normal
+  cursor_set = False
+  for button in args:
+    if button.collidepoint(pos_mouse):
+      pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Cambiar a cursor "manito"
+      cursor_set = True
+      break  # Si ya se ha encontrado un botón, no es necesario seguir comprobando los demás
+  if not cursor_set:
+    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
+
 def reset():
   global p1_score, p2_score, x_speed, y_speed
-
   p1.center = (distancia_borde , ALTO / 2)
   p2.center = (ANCHO - distancia_borde, ALTO / 2)
   p1_score, p2_score = 0, 0
-  ball.center = (ANCHO / 2 - ball_ancho / 2, ALTO / 2 - - ball_alto / 2)
+  ball.center = (ANCHO / 2 - ball_ancho / 2, ALTO / 2 - ball_alto / 2)
   x_speed, y_speed = random.choice([1, -1]), random.choice([1, -1])
-
+  print(f"RESET: {p1_score}, {p2_score}, {x_speed}, {y_speed}")
   return p1_score, p2_score, x_speed, y_speed
 
 def stop_playing(jugando, keys_pressed) -> bool:
@@ -120,19 +161,56 @@ def mover_jugador(keys_pressed):
       p1.bottom += player_speed
   runAI()
 
+def mover_jugadores(keys_pressed):
+  if keys_pressed[pygame.K_w]:
+    if p1.top > 0:
+      p1.top -= player_speed
+  if keys_pressed[pygame.K_s]:
+    if p1.bottom < ALTO:
+      p1.bottom += player_speed
+  if keys_pressed[pygame.K_UP]:
+    if p2.top > 0:
+      p2.top -= player_speed
+  if keys_pressed[pygame.K_DOWN]:
+    if p2.bottom < ALTO:
+      p2.bottom += player_speed
+
 def dificultad(p1_score, p2_score) -> int:
   velocidad = 2
-  print(p1_score, p2_score, velocidad)
   if p1_score + p2_score < 5:
     pygame.mixer.music.set_volume(0.5)
   if p1_score + p2_score >= 5:
     velocidad = 2.45
+    pantalla.fill((50, 0, 0))
     pygame.mixer.music.set_volume(0.7)
   if p1_score + p2_score >= 10:
     velocidad = 2.5
+    pantalla.fill((100, 0, 0))
     pygame.mixer.music.set_volume(1)
-  print(p1_score, p2_score, velocidad)
   return velocidad
+
+def colisiones_bordes(y_speed):
+  # Rebote con bordes
+  if ball.y >= ALTO:
+    y_speed = -1
+    pygame.mixer.Sound.play(hit)
+  if ball.y <= 0:
+    y_speed = 1
+    pygame.mixer.Sound.play(hit)
+  return y_speed
+    
+def colisiones_jugadores(x_speed):
+  # Rebote con jugador
+  if p1.colliderect(ball) and x_speed < 0:
+    pygame.mixer.Sound.play(hit)
+    x_speed = 1
+  if p2.colliderect(ball) and x_speed > 0:
+    pygame.mixer.Sound.play(hit)
+    x_speed = -1
+  return x_speed
+
+def manejar_colisiones(x_speed, y_speed):
+  return colisiones_jugadores(x_speed) , colisiones_bordes(y_speed)
 
 def Pong1P(jugando):
   arrancar_musica()
@@ -151,13 +229,9 @@ def Pong1P(jugando):
         
     jugando = stop_playing(jugando, keys_pressed)
         
-    # Rebote con bordes
-    if ball.y >= ALTO:
-      y_speed = -1
-      pygame.mixer.Sound.play(hit)
-    if ball.y <= 0:
-      y_speed = 1
-      pygame.mixer.Sound.play(hit)
+    # Rebote con bordes y jugadores
+    x_speed, y_speed = manejar_colisiones(x_speed, y_speed)
+
     # "Gol"
     gol = False
     if ball.x <= 0 - ball.width / 2:
@@ -171,16 +245,10 @@ def Pong1P(jugando):
       
     if gol:
       pygame.time.delay(900)
-      ball.center = (ANCHO / 2 - ball_ancho / 2, ALTO / 2 - - ball_alto / 2)
+      p1.center = (distancia_borde , ALTO / 2)
+      p2.center = (ANCHO - distancia_borde, ALTO / 2)
+      ball.center = (ANCHO / 2 - ball_ancho / 2, ALTO / 2 - ball_alto / 2)
       x_speed, y_speed = random.choice([1, -1]), random.choice([1, -1])
-    
-    # Rebote con jugador
-    if p1.colliderect(ball) and x_speed < 0:
-      pygame.mixer.Sound.play(hit)
-      x_speed = 1
-    if p2.colliderect(ball) and x_speed > 0:
-      pygame.mixer.Sound.play(hit)
-      x_speed = -1
     
     p1_score_text = fuente.render(str(p1_score), True, BLANCO)
     p2_score_text = fuente.render(str(p2_score), True, BLANCO)
@@ -209,20 +277,6 @@ def Pong1P(jugando):
       p2.center = (ANCHO - distancia_borde, ALTO / 2)
 
     pygame.display.flip()
-
-def mover_jugadores(keys_pressed):
-  if keys_pressed[pygame.K_w]:
-    if p1.top > 0:
-      p1.top -= player_speed
-  if keys_pressed[pygame.K_s]:
-    if p1.bottom < ALTO:
-      p1.bottom += player_speed
-  if keys_pressed[pygame.K_UP]:
-    if p2.top > 0:
-      p2.top -= player_speed
-  if keys_pressed[pygame.K_DOWN]:
-    if p2.bottom < ALTO:
-      p2.bottom += player_speed
 
 def Pong2P(jugando):
   arrancar_musica()
@@ -241,13 +295,9 @@ def Pong2P(jugando):
     
     jugando = stop_playing(jugando, keys_pressed)
         
-    # Rebote con bordes
-    if ball.y >= ALTO:
-      y_speed = -1
-      pygame.mixer.Sound.play(hit)
-    if ball.y <= 0:
-      y_speed = 1
-      pygame.mixer.Sound.play(hit)
+    # Rebote con bordes y jugadores
+    x_speed, y_speed = manejar_colisiones(x_speed, y_speed)
+    
     # "Gol"
     gol = False
     if ball.x <= 0 - ball.width / 2:
@@ -261,17 +311,11 @@ def Pong2P(jugando):
       
     if gol:
       pygame.time.delay(900)
-      ball.center = (ANCHO / 2 - ball_ancho / 2, ALTO / 2 - - ball_alto / 2)
+      p1.center = (distancia_borde , ALTO / 2)
+      p2.center = (ANCHO - distancia_borde, ALTO / 2)
+      ball.center = (ANCHO / 2 - ball_ancho / 2, ALTO / 2 - ball_alto / 2)
       x_speed, y_speed = random.choice([1, -1]), random.choice([1, -1])
-    
-    # Rebote con jugador
-    if p1.colliderect(ball) and x_speed < 0:
-      pygame.mixer.Sound.play(hit)
-      x_speed = 1
-    if p2.colliderect(ball) and x_speed > 0:
-      pygame.mixer.Sound.play(hit)
-      x_speed = -1
-    
+
     p1_score_text = fuente.render(str(p1_score), True, BLANCO)
     p2_score_text = fuente.render(str(p2_score), True, BLANCO)
     
@@ -300,54 +344,12 @@ def Pong2P(jugando):
 
     pygame.display.flip()
 
-#   MENU DEL JUEGO
-# Botones del menu de Pong
-botones_ancho, botones_alto = 300, 300
-button_1P = pygame.image.load('pong/img/button_1P.svg')
-button_1P = pygame.transform.scale(button_1P, (botones_ancho + 100, botones_alto + 100))
-
-button_2P = pygame.image.load('pong/img/button_2P.png')
-button_2P = pygame.transform.scale(button_2P, (botones_ancho, botones_alto))
-
-button_salir = pygame.image.load('pong/img/button_salir.png')
-button_salir = pygame.transform.scale(button_salir, (50, 50))
-
-def dibujar_menu():
-  pantalla.fill(NEGRO)
-  pong_icon = pygame.image.load('pong/img/pong_icon.png')
-  pygame.display.set_icon(pong_icon)
-  pygame.display.set_caption("PONG!")
-  
-  boton1P_rect = pantalla.blit(button_1P, (ANCHO // 2 - button_1P.get_width() * 0.80, ALTO // 2 - button_1P.get_height() * 0.35))
-  boton2P_rect = pantalla.blit(button_2P, (ANCHO // 2 + button_2P.get_width() * 0.05, ALTO // 2 - button_2P.get_height() * 0.5))
-  boton_salir_rect = pantalla.blit(button_salir, (button_salir.get_width() // 5, button_salir.get_height() // 5))
-  
-  pygame.display.flip()
-
-  return boton1P_rect, boton2P_rect, boton_salir_rect
-
-def cargar_musica():
-  pygame.mixer.music.unload()
-  pygame.mixer.music.load('./music/bg-music-3.mp3')
-  pygame.mixer.music.set_volume(0.5)
-
-def update_cursor(pos_mouse, *args: pygame.image) -> None:
-  # El cursor está en el estado normal
-  cursor_set = False
-  for button in args:
-    if button.collidepoint(pos_mouse):
-      pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Cambiar a cursor "manito"
-      cursor_set = True
-      break  # Si ya se ha encontrado un botón, no es necesario seguir comprobando los demás
-  if not cursor_set:
-    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
-
-
-
-def runPong(jugando, main_ancho = ANCHO, main_alto = ALTO, menu = True):
+def runPong(jugando, main_ancho = ANCHO, main_alto = ALTO):
   cargar_musica()
 
   pantalla = set_ventana_pong("")
+
+  menu = True
 
   while menu:
     boton1P_rect, boton2P_rect, boton_salir_rect = dibujar_menu()
