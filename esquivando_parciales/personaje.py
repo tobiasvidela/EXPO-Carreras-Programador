@@ -6,7 +6,7 @@ class Cubo:
         self.y = y 
         self.velocidad = 10 
         # Cargar la imagen del cubo
-        self.imagen = pygame.image.load("estudioso-removebg-preview.png").convert_alpha()
+        self.imagen = pygame.image.load("esquivando_parciales/estudioso-removebg-preview.png").convert_alpha()
         # Escalar la imagen al tamaño deseado
         self.imagen = pygame.transform.scale(self.imagen, (ancho, alto))
         self.ancho = ancho

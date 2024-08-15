@@ -6,7 +6,7 @@ class Enemigo:
         self.y = y
         self.velocidad = 4
         # Cargar la imagen del enemigo
-        self.imagen = pygame.image.load("Emoji_u1f4dd-removebg-preview.png").convert_alpha()
+        self.imagen = pygame.image.load("esquivando_parciales/Emoji_u1f4dd-removebg-preview.png").convert_alpha()
         # Escalar la imagen al tamaño deseado
         self.imagen = pygame.transform.scale(self.imagen, (ancho, alto))
         self.ancho = ancho

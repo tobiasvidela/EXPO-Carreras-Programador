@@ -1,15 +1,15 @@
 import pygame # importamos el modulo
-from personaje import Cubo #importamos el personaje Cubo del archivo personaje
-from enemigo import Enemigo #importamos el personaje Enemigo del archivo enemigo
+from esquivando_parciales.personaje import Cubo #importamos el personaje Cubo del archivo personaje
+from esquivando_parciales.enemigo import Enemigo #importamos el personaje Enemigo del archivo enemigo
 import random # importamos el modulo
 import sys
 
 pygame.init() # inicializando modulos de pygame
 pygame.mixer.init() # inicializando modulos de pygame mixer
 
-sonido_colision = pygame.mixer.Sound("vine-boom.mp3") # cargar sonido de colision
+sonido_colision = pygame.mixer.Sound("esquivando_parciales/vine-boom.mp3") # cargar sonido de colision
 #sonido_fondo = pygame.mixer.Sound("oacrna.mp3")
-pygame.mixer.music.load("oacrna.mp3") # cargar sonido de fondo
+pygame.mixer.music.load("esquivando_parciales/oacrna.mp3") # cargar sonido de fondo
 pygame.mixer.music.play(-1) # reproducir musica de fondo 
 
 ANCHO = 1300 # ancho de nuestra ventana
@@ -34,7 +34,7 @@ enemigos = []
 enemigos.append(Enemigo(ANCHO / 2, 100, 50, 60)) # lugar donde aparecen los enemigos en la pantalla
 
 # Carga y escala de la imagen de fondo
-fondo = pygame.image.load("IMG-20230605-WA0029.jpg").convert()
+fondo = pygame.image.load("esquivando_parciales/IMG-20230605-WA0029.jpg").convert()
 fondo = pygame.transform.scale(fondo, (ANCHO, ALTO))
 
 def gestionar_teclas(teclas):
@@ -61,10 +61,26 @@ velocidad_enemigos = 5  # Velocidad inicial de los enemigos
 incremento_velocidad = 0.3  # Cuánto aumentar la velocidad cada vez
 puntos_para_incrementar = 50  # Incrementar la velocidad cada 50 puntos
 
-def esquivando_parciales(jugando,main_ancho,main_alto):
-
+def esquivando_parciales(jugando):
     global vidas, tiempo_pasado, tiempo_entre_enemigos, tiempo_minimo_entre_enemigos, puntos, puntos_para_incrementar, texto_final,texto_final,texto_vida,velocidad_enemigos,incremento_velocidad
+
     VENTANA = pygame.display.set_mode([ANCHO, ALTO])
+    pygame.mixer.music.unload()
+    pygame.mixer.music.load("esquivando_parciales/oacrna.mp3")
+    pygame.mixer.music.play(-1)
+    
+    # reset a Parámetros iniciales
+    tiempo_pasado = 0
+    tiempo_entre_enemigos = 600  # Tiempo inicial entre enemigos
+    tiempo_minimo_entre_enemigos = 100  # Límite inferior para el tiempo entre enemigos
+    factor_reduccion = 7  # Cuánto reducir el tiempo entre enemigos cada vez que aparece uno
+
+    vidas = 5 # variable de vidas iniciada en 5
+    puntos = 0 # variable de puntos iniciada en 0
+
+    velocidad_enemigos = 5  # Velocidad inicial de los enemigos
+    incremento_velocidad = 0.3  # Cuánto aumentar la velocidad cada vez
+    puntos_para_incrementar = 50  # Incrementar la velocidad cada 50 puntos
 
     while jugando and vidas > 0: # mientras este jugando y las vidas sean mayores a 0
         #sonido_fondo.play()
@@ -72,7 +88,7 @@ def esquivando_parciales(jugando,main_ancho,main_alto):
 
         if tiempo_pasado > tiempo_entre_enemigos:
             enemigos.append(Enemigo(random.randint(0, ANCHO), -100, 50, 60))
-            enemigo.velocidad = velocidad_enemigos  # Asignar la velocidad actual a los enemigos
+            Enemigo.velocidad = velocidad_enemigos  # Asignar la velocidad actual a los enemigos
             tiempo_pasado = 0
 
             # Reducir el tiempo entre enemigos hasta un límite mínimo
@@ -135,6 +151,6 @@ def esquivando_parciales(jugando,main_ancho,main_alto):
     pygame.time.delay(3000)  # 5 segundos de pausa
 
     jugando = False # cerramos el programa
-    VENTANA = pygame.display.set_mode([main_ancho, main_alto]) # actualizo la pantalla
 
-esquivando_parciales(jugando,ANCHO,ALTO)
+if __name__ == '__main__':
+    esquivando_parciales(jugando)

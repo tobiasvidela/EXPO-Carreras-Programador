@@ -2,6 +2,7 @@ import pygame, sys, os, random, webbrowser
 
 # imports de funciones que inician los juegos
 from pong.pong import runPong
+from esquivando_parciales.juego1 import esquivando_parciales
 
 # Inicializar Pygame
 pygame.init()
@@ -169,7 +170,8 @@ def main():
           set_menu(ANCHO, ALTO, icon_path, bg_music_2)
         elif boton3_rect.collidepoint(event.pos):
           jugando = True
-          # juegoNICO()
+          esquivando_parciales(jugando)
+          set_menu(ANCHO, ALTO, icon_path, bg_music_2)
         elif logo_rect.collidepoint(event.pos):
           webbrowser.open('https://www.unvime.edu.ar')
           print("Logo clickeado, abriendo página web...")
