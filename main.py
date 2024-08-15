@@ -18,9 +18,9 @@ bg_music_2 = './music/bg-music-2.mp3'
 bg_music_3 = './music/bg-music-3.mp3'
 
 selected_path = './sound/selected.mp3'
-icon_path = 'img/ESCUDO-UNViMe.png'
-caption = "Expo Carreras - Programación"
-logo_UNViMe_path = 'img/LOGO-UNViMe-BLANCO-PIE.png'
+icon_path = 'img/ICONO_CLUB.png'
+caption = "Expo Carreras - Club de Programación UNViMe"
+logo_UNViMe_path = 'img/LOGO_CLUB_LONG.png'
 
 boton_juego1_path = './img/boton_juego1.png'
 boton_juego2_path = './img/boton_juego2.png'
@@ -151,6 +151,7 @@ def sonido_boton(selected):
 
 # Bucle principal
 while True:
+  pygame.mixer.music.set_volume(0.2)
   pygame.mixer.music.unpause()
   
   boton1_rect, boton2_rect, boton3_rect, boton4_rect = dibujar_menu()
