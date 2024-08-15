@@ -1,6 +1,7 @@
 import pygame, sys, os, random, webbrowser
 
 # imports de funciones que inician los juegos
+from pong.pong import runPong
 
 # Inicializar Pygame
 pygame.init()
@@ -19,6 +20,15 @@ AZUL = (0, 0, 255)
 CIAN = (0, 255, 255)
 ROSA = (255, 0, 255)
 YELLOW = (255, 255, 0)
+
+#   SOUNDS
+pygame.mixer.music.unload()
+pygame.mixer.music.load('./music/bg-music-2.mp3')
+pygame.mixer.music.set_volume(0.15)
+pygame.mixer.music.play(loops=-1, fade_ms=150)
+
+selected = pygame.mixer.Sound('./sound/selected.mp3')
+pygame.mixer.Sound.set_volume(selected, 0.99)
 
 #   Configuraciones de la ventana del menú principal
 ANCHO, ALTO = 720, 480
@@ -63,17 +73,26 @@ def dibujar_menu():
 
   return boton1_rect, boton2_rect, boton3_rect, boton4_rect
 
+def update_cursor(pos_mouse, *args: pygame.image) -> None:
+  # El cursor está en el estado normal
+  cursor_set = False
+  for button in args:
+    if button.collidepoint(pos_mouse):
+      pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Cambiar a cursor "manito"
+      cursor_set = True
+      break  # Si ya se ha encontrado un botón, no es necesario seguir comprobando los demás
+  if not cursor_set:
+    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
+
 # Bucle principal
 while True:
+  pygame.mixer.music.unpause()
   
   boton1_rect, boton2_rect, boton3_rect, boton4_rect = dibujar_menu()
 
   pos_mouse = pygame.mouse.get_pos()
 
-  if boton1_rect.collidepoint(pos_mouse) or boton2_rect.collidepoint(pos_mouse) or boton3_rect.collidepoint(pos_mouse) or boton4_rect.collidepoint(pos_mouse) or logo_UNViMe_rect.collidepoint(pos_mouse):
-    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Cambiar a cursor "manito"
-  else:
-    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
+  update_cursor(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
 
   if boton1_rect.collidepoint(pos_mouse):
     boton_juego1 = pygame.image.load('img/boton_juego1_hover.png')
@@ -118,8 +137,19 @@ while True:
         jugando = True
         # juegoNICO()
       elif boton4_rect.collidepoint(event.pos):
+        pygame.mixer.music.pause()
+        pygame.time.delay(150)
+        pygame.mixer.Sound.play(selected)
         jugando = True
-        # juegoTOBI()
+        print("Running Pong")
+        runPong(jugando, ANCHO, ALTO)
+        pantalla = pygame.display.set_mode((ANCHO, ALTO))
+        icono = pygame.image.load('img/ESCUDO-UNViMe.png')
+        pygame.display.set_icon(icono)
+        pygame.display.set_caption("Expo Carreras - Programación")
+        pygame.mixer.music.unload()
+        pygame.mixer.music.load('./music/bg-music-2.mp3')
+        pygame.mixer.music.play()
       elif logo_UNViMe_rect.collidepoint(event.pos):
         webbrowser.open('https://www.unvime.edu.ar')
         print("Logo clickeado, abriendo página web...")
