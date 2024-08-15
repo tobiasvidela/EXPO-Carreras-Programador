@@ -25,11 +25,10 @@ logo_path = 'img/LOGO_CLUB_LONG.png'
 boton_juego1_path = './img/boton_juego1.png'
 boton_juego2_path = './img/boton_juego2.png'
 boton_juego3_path = './img/boton_juego3.png'
-boton_juego4_path = './img/boton_juego4.png'
+
 boton_juego1_hover_path = './img/boton_juego1_hover.png'
 boton_juego2_hover_path = './img/boton_juego2_hover.png'
 boton_juego3_hover_path = './img/boton_juego3_hover.png'
-boton_juego4_hover_path = './img/boton_juego4_hover.png'
 
 # Colores
 BLANCO = (255, 255, 255)
@@ -72,9 +71,6 @@ boton_juego2 = pygame.transform.scale(boton_juego2, (botones_ancho, botones_alto
 boton_juego3 = pygame.image.load(boton_juego3_path)
 boton_juego3 = pygame.transform.scale(boton_juego3, (botones_ancho, botones_alto))
 
-boton_juego4 = pygame.image.load(boton_juego4_path)
-boton_juego4 = pygame.transform.scale(boton_juego4, (botones_ancho, botones_alto))
-
 # Función para dibujar el menú
 def dibujar_menu():
   global pantalla
@@ -86,12 +82,11 @@ def dibujar_menu():
   # Dibujar botones con imágenes
   boton1_rect = pantalla.blit(boton_juego1, (ANCHO // 2 - boton_juego1.get_width() * 1.25, 165))
   boton2_rect = pantalla.blit(boton_juego2, (ANCHO // 2 + boton_juego2.get_width() * 0.25, 165))
-  boton3_rect = pantalla.blit(boton_juego3, (ANCHO // 2 - boton_juego3.get_width() * 1.25, 315))
-  boton4_rect = pantalla.blit(boton_juego4, (ANCHO // 2 + boton_juego4.get_width() * 0.25, 315))
+  boton3_rect = pantalla.blit(boton_juego3, (ANCHO // 2 - boton_juego3.get_width() * 0.50, 315))
 
   pygame.display.flip()
 
-  return boton1_rect, boton2_rect, boton3_rect, boton4_rect
+  return boton1_rect, boton2_rect, boton3_rect#, boton4_rect
 
 def update_cursor(pos_mouse, *args: pygame.image) -> None:
   # El cursor está en el estado normal
@@ -104,7 +99,7 @@ def update_cursor(pos_mouse, *args: pygame.image) -> None:
   if not cursor_set:
     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
 
-def update_button(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect):
+def update_button(pos_mouse, boton1_rect, boton2_rect, boton3_rect):
   if boton1_rect.collidepoint(pos_mouse):
     boton_juego1 = pygame.image.load(boton_juego1_hover_path)
     boton_juego1 = pygame.transform.scale(boton_juego1, (botones_ancho, botones_alto))
@@ -125,15 +120,8 @@ def update_button(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
   else:
     boton_juego3 = pygame.image.load(boton_juego3_path)
     boton_juego3 = pygame.transform.scale(boton_juego3, (botones_ancho, botones_alto))
-
-  if boton4_rect.collidepoint(pos_mouse):
-    boton_juego4 = pygame.image.load(boton_juego4_hover_path)
-    boton_juego4 = pygame.transform.scale(boton_juego4, (botones_ancho, botones_alto))
-  else:
-    boton_juego4 = pygame.image.load(boton_juego4_path)
-    boton_juego4 = pygame.transform.scale(boton_juego4, (botones_ancho, botones_alto))
   
-  return boton_juego1, boton_juego2, boton_juego3, boton_juego4
+  return boton_juego1, boton_juego2, boton_juego3
 
 def set_menu(ANCHO, ALTO, icon_path, music_path):
   pantalla = pygame.display.set_mode((ANCHO, ALTO))
@@ -150,18 +138,18 @@ def sonido_boton(selected):
   pygame.mixer.Sound.play(selected)
 
 def main():
-  global boton_juego1, boton_juego2, boton_juego3, boton_juego4
+  global boton_juego1, boton_juego2, boton_juego3
   while True:
     pygame.mixer.music.set_volume(0.2)
     pygame.mixer.music.unpause()
     
-    boton1_rect, boton2_rect, boton3_rect, boton4_rect = dibujar_menu()
+    boton1_rect, boton2_rect, boton3_rect = dibujar_menu()
 
     pos_mouse = pygame.mouse.get_pos()
 
-    update_cursor(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
+    update_cursor(pos_mouse, boton1_rect, boton2_rect, boton3_rect)
 
-    boton_juego1, boton_juego2, boton_juego3, boton_juego4 = update_button(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
+    boton_juego1, boton_juego2, boton_juego3 = update_button(pos_mouse, boton1_rect, boton2_rect, boton3_rect)
 
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -176,15 +164,12 @@ def main():
           # juegoBRAIAM()
         elif boton2_rect.collidepoint(event.pos):
           jugando = True
-          # juegoEZEyMARTI()
-        elif boton3_rect.collidepoint(event.pos):
-          jugando = True
-          # juegoNICO()
-        elif boton4_rect.collidepoint(event.pos):
-          jugando = True
           print("Running Pong")
           runPong(jugando, ANCHO, ALTO)
           set_menu(ANCHO, ALTO, icon_path, bg_music_2)
+        elif boton3_rect.collidepoint(event.pos):
+          jugando = True
+          # juegoNICO()
         elif logo_rect.collidepoint(event.pos):
           webbrowser.open('https://www.unvime.edu.ar')
           print("Logo clickeado, abriendo página web...")
