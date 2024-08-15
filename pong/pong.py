@@ -65,6 +65,7 @@ ball.center = (ANCHO / 2 - ball_ancho / 2, ALTO / 2 - - ball_alto / 2)
 x_speed, y_speed = 1, 1
 
 def Pong1P(jugando):
+  pygame.mixer.music.play(loops=-1, fade_ms=150)
   pong_screen = pygame.display.set_mode((ANCHO, ALTO))
   pygame.display.set_caption("PONG! - 1P")
 
@@ -90,14 +91,23 @@ def Pong1P(jugando):
         p1.bottom += player_speed
     if p2.top < ball.y:
       if p2.top > 0:
-        p2.top += player_speed * 0.71
+        p2.top += player_speed * 0.9
+      else:
+        p2.top += player_speed * 0.74
+      if ANCHO - ball.x < ANCHO - p2.left + ball.width:
+        p2.top += player_speed * 2.225 # 2.200 easy | 2.225 medium | +2.250 imbatible
     if p2.bottom > ball.y:
       if p2.bottom < ALTO:
-        p2.bottom -= player_speed * 0.71
+        p2.bottom -= player_speed * 0.9
+      else:
+        p2.bottom -= player_speed * 0.74
+      if ANCHO - ball.x < ANCHO - p2.left + ball.width:
+        p2.bottom -= player_speed * 1.25
         
     if keys_pressed[pygame.K_ESCAPE]:
       jugando = False
       pygame.display.set_caption("Pong!")
+      pygame.mixer.music.pause()
 
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -164,6 +174,7 @@ def Pong1P(jugando):
     pygame.display.flip()
 
 def Pong2P(jugando):
+  pygame.mixer.music.play(loops=-1, fade_ms=150)
   pong_screen = pygame.display.set_mode((ANCHO, ALTO))
   pygame.display.set_caption("PONG! - 2P")
 
@@ -196,6 +207,7 @@ def Pong2P(jugando):
     if keys_pressed[pygame.K_ESCAPE]:
       jugando = False
       pygame.display.set_caption("Pong!")
+      pygame.mixer.music.pause()
 
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -264,8 +276,8 @@ def Pong2P(jugando):
 #   MENU DEL JUEGO
 # Botones del menu de Pong
 botones_ancho, botones_alto = 300, 300
-button_1P = pygame.image.load('pong/img/button_1P.png')
-button_1P = pygame.transform.scale(button_1P, (botones_ancho, botones_alto))
+button_1P = pygame.image.load('pong/img/button_1P.svg')
+button_1P = pygame.transform.scale(button_1P, (botones_ancho + 100, botones_alto + 100))
 
 button_2P = pygame.image.load('pong/img/button_2P.png')
 button_2P = pygame.transform.scale(button_2P, (botones_ancho, botones_alto))
@@ -279,8 +291,8 @@ def dibujar_menu():
   pygame.display.set_icon(pong_icon)
   pygame.display.set_caption("PONG!")
   
-  boton1P_rect = pantalla.blit(button_1P, (ANCHO // 2 - button_1P.get_width() * 1.05, ALTO // 2 - button_1P.get_height() // 2))
-  boton2P_rect = pantalla.blit(button_2P, (ANCHO // 2 + button_2P.get_width() * 0.05, ALTO // 2 - button_1P.get_height() // 2))
+  boton1P_rect = pantalla.blit(button_1P, (ANCHO // 2 - button_1P.get_width() * 0.80, ALTO // 2 - button_1P.get_height() * 0.35))
+  boton2P_rect = pantalla.blit(button_2P, (ANCHO // 2 + button_2P.get_width() * 0.05, ALTO // 2 - button_2P.get_height() * 0.5))
   boton_salir_rect = pantalla.blit(button_salir, (button_salir.get_width() // 5, button_salir.get_height() // 5))
   
   pygame.display.flip()
@@ -288,6 +300,10 @@ def dibujar_menu():
   return boton1P_rect, boton2P_rect, boton_salir_rect
 
 def runPong(jugando, main_ancho, main_alto, menu = True):
+  pygame.mixer.music.unload()
+  pygame.mixer.music.load('./music/bg-music-3.mp3')
+  pygame.mixer.music.set_volume(0.3)
+
   pantalla = pygame.display.set_mode((ANCHO, ALTO))
 
   while menu:
@@ -313,6 +329,14 @@ def runPong(jugando, main_ancho, main_alto, menu = True):
           Pong2P(jugando)
         elif boton_salir_rect.collidepoint(event.pos):
           menu = False
+          pantalla = pygame.display.set_mode((main_ancho, main_alto))
+          icono = pygame.image.load('img/ESCUDO-UNViMe.png')
+          pygame.display.set_icon(icono)
+          pygame.display.set_caption("Expo Carreras - Programación")
+          pygame.mixer.music.unload()
+          pygame.mixer.music.load('./music/bg-music-2.mp3')
+          pygame.mixer.music.play()
+          print("Stopping Pong")
     
       if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_1:
@@ -327,6 +351,10 @@ def runPong(jugando, main_ancho, main_alto, menu = True):
           icono = pygame.image.load('img/ESCUDO-UNViMe.png')
           pygame.display.set_icon(icono)
           pygame.display.set_caption("Expo Carreras - Programación")
+          pygame.mixer.music.unload()
+          pygame.mixer.music.load('./music/bg-music-2.mp3')
+          pygame.mixer.music.play()
+          print("Stopping Pong")
 
     pygame.display.update()
 

@@ -21,6 +21,15 @@ CIAN = (0, 255, 255)
 ROSA = (255, 0, 255)
 YELLOW = (255, 255, 0)
 
+#   SOUNDS
+pygame.mixer.music.unload()
+pygame.mixer.music.load('./music/bg-music-2.mp3')
+pygame.mixer.music.set_volume(0.15)
+pygame.mixer.music.play(loops=-1, fade_ms=150)
+
+selected = pygame.mixer.Sound('./sound/selected.mp3')
+pygame.mixer.Sound.set_volume(selected, 0.99)
+
 #   Configuraciones de la ventana del menú principal
 ANCHO, ALTO = 720, 480
 pantalla = pygame.display.set_mode((ANCHO, ALTO))
@@ -66,6 +75,7 @@ def dibujar_menu():
 
 # Bucle principal
 while True:
+  pygame.mixer.music.unpause()
   
   boton1_rect, boton2_rect, boton3_rect, boton4_rect = dibujar_menu()
 
@@ -119,9 +129,12 @@ while True:
         jugando = True
         # juegoNICO()
       elif boton4_rect.collidepoint(event.pos):
+        pygame.mixer.music.pause()
+        pygame.time.delay(150)
+        pygame.mixer.Sound.play(selected)
         jugando = True
-        runPong(jugando, ANCHO, ALTO)
         print("Running Pong")
+        runPong(jugando, ANCHO, ALTO)
       elif logo_UNViMe_rect.collidepoint(event.pos):
         webbrowser.open('https://www.unvime.edu.ar')
         print("Logo clickeado, abriendo página web...")
