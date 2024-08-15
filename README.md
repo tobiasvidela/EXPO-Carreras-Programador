@@ -69,6 +69,7 @@ git diff main
 ```
 4. **Hacer merge**: Haz un merge de la rama en `main`. Asegúrate de resolver cualquier conflicto que pueda surgir.
 ``` bash
+git checkout main
 git merge nombre_de_la_rama
 ```
 5. **Push de `main` actualizado**: Finalmente, sube los cambios fusionados a GitHub.
