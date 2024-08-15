@@ -86,64 +86,14 @@ wn.onkeypress(arriba, "Up")
 wn.onkeypress(abajo, "Down")
 wn.onkeypress(izquierda, "Left")
 wn.onkeypress(derecha, "Right")
-    
-while True:
-    wn.update()
 
-    # Colisiones bordes
-    if cabeza.xcor() > 280 or cabeza.xcor() < -280 or cabeza.ycor() > 280 or cabeza.ycor() < -280:
-        time.sleep(1)
-        cabeza.goto(0, 0)
-        cabeza.direction = "stop"
+def iniciar_snake_game (jugando, main_ancho, main_alto):
+        
+    while True:
+        wn.update()
 
-        for segmento in segmentos:
-            segmento.goto(1000, 1000)
-
-        segmentos.clear()
-
-        score = 0
-        texto.clear()
-        texto.write("Puntaje: {}     Récord: {}".format(score, high_score), 
-                    align="center", font=("Impact", 24, "normal"))
-
-    # Colisiones comida
-    if cabeza.distance(comida) < 20:
-        x = random.randint(-280, 280)
-        y = random.randint(-280, 280)
-        comida.goto(x, y)
-
-        nuevo_segmento = turtle.Turtle()
-        nuevo_segmento.speed(0)
-        nuevo_segmento.shape("square")
-        nuevo_segmento.color("green")
-        nuevo_segmento.penup()
-        segmentos.append(nuevo_segmento)
-
-        score += 1
-        if score > high_score:
-            high_score = score
-
-        texto.clear()
-        texto.write("Puntaje: {}    Récord: {}".format(score, high_score), 
-                    align="center", font=("Impact", 24, "normal"))
-
-    # Mover el cuerpo de la serpiente
-    totalSeg = len(segmentos)
-    for index in range(totalSeg - 1, 0, -1):
-        x = segmentos[index - 1].xcor()
-        y = segmentos[index - 1].ycor()
-        segmentos[index].goto(x, y)
-
-    if totalSeg > 0:
-        x = cabeza.xcor()
-        y = cabeza.ycor()
-        segmentos[0].goto(x, y)
-
-    mov()
-
-    # Colisiones con el cuerpo
-    for segmento in segmentos:
-        if segmento.distance(cabeza) < 5:
+        # Colisiones bordes
+        if cabeza.xcor() > 280 or cabeza.xcor() < -280 or cabeza.ycor() > 280 or cabeza.ycor() < -280:
             time.sleep(1)
             cabeza.goto(0, 0)
             cabeza.direction = "stop"
@@ -155,7 +105,59 @@ while True:
 
             score = 0
             texto.clear()
+            texto.write("Puntaje: {}     Récord: {}".format(score, high_score), 
+                        align="center", font=("Impact", 24, "normal"))
+
+        # Colisiones comida
+        if cabeza.distance(comida) < 20:
+            x = random.randint(-280, 280)
+            y = random.randint(-280, 280)
+            comida.goto(x, y)
+
+            nuevo_segmento = turtle.Turtle()
+            nuevo_segmento.speed(0)
+            nuevo_segmento.shape("square")
+            nuevo_segmento.color("green")
+            nuevo_segmento.penup()
+            segmentos.append(nuevo_segmento)
+
+            score += 1
+            if score > high_score:
+                high_score = score
+
+            texto.clear()
             texto.write("Puntaje: {}    Récord: {}".format(score, high_score), 
                         align="center", font=("Impact", 24, "normal"))
 
-    time.sleep(posponer)
+        # Mover el cuerpo de la serpiente
+        totalSeg = len(segmentos)
+        for index in range(totalSeg - 1, 0, -1):
+            x = segmentos[index - 1].xcor()
+            y = segmentos[index - 1].ycor()
+            segmentos[index].goto(x, y)
+
+        if totalSeg > 0:
+            x = cabeza.xcor()
+            y = cabeza.ycor()
+            segmentos[0].goto(x, y)
+
+        mov()
+
+        # Colisiones con el cuerpo
+        for segmento in segmentos:
+            if segmento.distance(cabeza) < 5:
+                time.sleep(1)
+                cabeza.goto(0, 0)
+                cabeza.direction = "stop"
+
+                for segmento in segmentos:
+                    segmento.goto(1000, 1000)
+
+                segmentos.clear()
+
+                score = 0
+                texto.clear()
+                texto.write("Puntaje: {}    Récord: {}".format(score, high_score), 
+                            align="center", font=("Impact", 24, "normal"))
+
+        time.sleep(posponer)

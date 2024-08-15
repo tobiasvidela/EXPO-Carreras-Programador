@@ -1,6 +1,7 @@
 import pygame, sys, os, random, webbrowser
 
 # imports de funciones que inician los juegos
+from Snake_Game.juego1 import iniciar_snake_game
 
 # Inicializar Pygame
 pygame.init()
@@ -113,7 +114,7 @@ while True:
         # juegoBRAIAM()
       elif boton2_rect.collidepoint(event.pos):
         jugando = True
-        # juegoEZEyMARTI()
+        iniciar_snake_game(jugando, ANCHO, ALTO)
       elif boton3_rect.collidepoint(event.pos):
         jugando = True
         # juegoNICO()
