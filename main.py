@@ -84,30 +84,7 @@ def update_cursor(pos_mouse, *args: pygame.image) -> None:
   if not cursor_set:
     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
 
-def set_menu(ANCHO, ALTO, icon_path, music_path):
-  pantalla = pygame.display.set_mode((ANCHO, ALTO))
-  icono = pygame.image.load(icon_path)
-  pygame.display.set_icon(icono)
-  pygame.display.set_caption("Expo Carreras - Programación")
-  pygame.mixer.music.unload()
-  pygame.mixer.music.load(music_path)
-  pygame.mixer.music.play()
-
-def sonido_boton(selected):
-  pygame.mixer.music.pause()
-  pygame.time.delay(150)
-  pygame.mixer.Sound.play(selected)
-
-# Bucle principal
-while True:
-  pygame.mixer.music.unpause()
-  
-  boton1_rect, boton2_rect, boton3_rect, boton4_rect = dibujar_menu()
-
-  pos_mouse = pygame.mouse.get_pos()
-
-  update_cursor(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
-
+def update_button(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect):
   if boton1_rect.collidepoint(pos_mouse):
     boton_juego1 = pygame.image.load('img/boton_juego1_hover.png')
     boton_juego1 = pygame.transform.scale(boton_juego1, (botones_ancho, botones_alto))
@@ -135,6 +112,35 @@ while True:
   else:
     boton_juego4 = pygame.image.load('img/boton_juego4.png')
     boton_juego4 = pygame.transform.scale(boton_juego4, (botones_ancho, botones_alto))
+  
+  return boton_juego1, boton_juego2, boton_juego3, boton_juego4
+
+
+def set_menu(ANCHO, ALTO, icon_path, music_path):
+  pantalla = pygame.display.set_mode((ANCHO, ALTO))
+  icono = pygame.image.load(icon_path)
+  pygame.display.set_icon(icono)
+  pygame.display.set_caption("Expo Carreras - Programación")
+  pygame.mixer.music.unload()
+  pygame.mixer.music.load(music_path)
+  pygame.mixer.music.play()
+
+def sonido_boton(selected):
+  pygame.mixer.music.pause()
+  pygame.time.delay(150)
+  pygame.mixer.Sound.play(selected)
+
+# Bucle principal
+while True:
+  pygame.mixer.music.unpause()
+  
+  boton1_rect, boton2_rect, boton3_rect, boton4_rect = dibujar_menu()
+
+  pos_mouse = pygame.mouse.get_pos()
+
+  update_cursor(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
+
+  boton_juego1, boton_juego2, boton_juego3, boton_juego4 = update_button(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
 
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
@@ -143,6 +149,7 @@ while True:
     if event.type == pygame.MOUSEBUTTONDOWN:
       # Click en boton
       sonido_boton(selected)
+
       if boton1_rect.collidepoint(event.pos):
         jugando = True
         # juegoBRAIAM()
