@@ -8,7 +8,7 @@ Este proyecto consiste en el desarrollo de una serie de juegos en Python, diseñ
   - **[Nombre del Juego 1]**: Breve descripción del juego 1.
   - **[Nombre del Juego 2]**: Breve descripción del juego 2.
   - **[Nombre del Juego 3]**: Breve descripción del juego 3.
-  - **Pong**: El clásico juego bidimensional que simula el tenis de mesa. El jugador controla una paleta en el juego, moviéndola hacia arriba y hacia abajo en el lado izquierdo o derecho de la pantalla, con el objetivo de golpear la pelota de un lado a otro para anotar la mayor puntuación posible y vencer a su oponente.
+  - **Pong**: El clásico juego bidimensional que simula el tenis de mesa. El jugador controla una paleta en el juego, moviéndola hacia arriba y hacia abajo en el lado izquierdo o derecho de la pantalla, con el objetivo de anotar diez puntos antes que su oponente.
 
 ## Colaboradores
 Este proyecto está siendo desarrollado por un equipo de 5 programadores:

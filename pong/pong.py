@@ -66,7 +66,7 @@ p2 = pygame.Rect(p2_x, p2_y, player_ancho, player_alto)
 p2.center = (ANCHO - distancia_borde, ALTO / 2)
 
 p1_score, p2_score = 0, 0
-max_score = 3
+max_score = 10
 
 # Pelota
 ball_ancho, ball_alto = 10, 10
@@ -181,7 +181,6 @@ def dificultad(p1_score, p2_score) -> int:
     pygame.mixer.music.set_volume(0.5)
   if p1_score + p2_score >= 5:
     velocidad = 2.45
-    pantalla.fill((50, 0, 0))
     pygame.mixer.music.set_volume(0.7)
   if p1_score + p2_score >= 10:
     velocidad = 2.5
