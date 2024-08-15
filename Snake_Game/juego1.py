@@ -12,7 +12,8 @@ high_score = 0
 wn = turtle.Screen()
 wn.title("Snake Game")
 wn.bgcolor("light blue")
-wn.setup(width=600, height=600)
+ANCHO, ALTO = 600, 600
+wn.setup(width=ANCHO, height=ALTO)
 wn.tracer(0)
 
 # Cabeza serpiente
@@ -25,15 +26,15 @@ cabeza.goto(0, 0)
 cabeza.direction = "stop"
 
 # Cargar la imagen de comida
-wn.addshape("comida.gif")
+#wn.addshape("comida.gif") # fix para más tarde
 
-# Comida con imagen personalizada
+# Comida sin imagen personalizada
 comida = turtle.Turtle()
 comida.speed(0)
-comida.shape("comida.gif")  # Establece la imagen como la forma de la comida
+comida.shape("circle")
+comida.color("red")
 comida.penup()
 comida.goto(0, 100)
-
 # Segmentos
 segmentos = []
 
@@ -87,9 +88,10 @@ wn.onkeypress(abajo, "Down")
 wn.onkeypress(izquierda, "Left")
 wn.onkeypress(derecha, "Right")
 
-def iniciar_snake_game (jugando, main_ancho, main_alto):
+def iniciar_snake_game(jugando):
+    global score, high_score
         
-    while True:
+    while jugando:
         wn.update()
 
         # Colisiones bordes
@@ -161,3 +163,6 @@ def iniciar_snake_game (jugando, main_ancho, main_alto):
                             align="center", font=("Impact", 24, "normal"))
 
         time.sleep(posponer)
+
+if __name__ == '__main__':
+    iniciar_snake_game(True)
