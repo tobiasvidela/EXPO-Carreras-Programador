@@ -84,6 +84,20 @@ def update_cursor(pos_mouse, *args: pygame.image) -> None:
   if not cursor_set:
     pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
 
+def set_menu(ANCHO, ALTO, icon_path, music_path):
+  pantalla = pygame.display.set_mode((ANCHO, ALTO))
+  icono = pygame.image.load(icon_path)
+  pygame.display.set_icon(icono)
+  pygame.display.set_caption("Expo Carreras - Programación")
+  pygame.mixer.music.unload()
+  pygame.mixer.music.load(music_path)
+  pygame.mixer.music.play()
+
+def sonido_boton(selected):
+  pygame.mixer.music.pause()
+  pygame.time.delay(150)
+  pygame.mixer.Sound.play(selected)
+
 # Bucle principal
 while True:
   pygame.mixer.music.unpause()
@@ -127,6 +141,8 @@ while True:
       pygame.quit()
       sys.exit()
     if event.type == pygame.MOUSEBUTTONDOWN:
+      # Click en boton
+      sonido_boton(selected)
       if boton1_rect.collidepoint(event.pos):
         jugando = True
         # juegoBRAIAM()
@@ -137,19 +153,10 @@ while True:
         jugando = True
         # juegoNICO()
       elif boton4_rect.collidepoint(event.pos):
-        pygame.mixer.music.pause()
-        pygame.time.delay(150)
-        pygame.mixer.Sound.play(selected)
         jugando = True
         print("Running Pong")
         runPong(jugando, ANCHO, ALTO)
-        pantalla = pygame.display.set_mode((ANCHO, ALTO))
-        icono = pygame.image.load('img/ESCUDO-UNViMe.png')
-        pygame.display.set_icon(icono)
-        pygame.display.set_caption("Expo Carreras - Programación")
-        pygame.mixer.music.unload()
-        pygame.mixer.music.load('./music/bg-music-2.mp3')
-        pygame.mixer.music.play()
+        set_menu(ANCHO, ALTO, 'img/ESCUDO-UNViMe.png', './music/bg-music-2.mp3')
       elif logo_UNViMe_rect.collidepoint(event.pos):
         webbrowser.open('https://www.unvime.edu.ar')
         print("Logo clickeado, abriendo página web...")
