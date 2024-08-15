@@ -73,6 +73,17 @@ def dibujar_menu():
 
   return boton1_rect, boton2_rect, boton3_rect, boton4_rect
 
+def update_cursor(pos_mouse, *args: pygame.image) -> None:
+  # El cursor está en el estado normal
+  cursor_set = False
+  for button in args:
+    if button.collidepoint(pos_mouse):
+      pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Cambiar a cursor "manito"
+      cursor_set = True
+      break  # Si ya se ha encontrado un botón, no es necesario seguir comprobando los demás
+  if not cursor_set:
+    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
+
 # Bucle principal
 while True:
   pygame.mixer.music.unpause()
@@ -81,10 +92,7 @@ while True:
 
   pos_mouse = pygame.mouse.get_pos()
 
-  if boton1_rect.collidepoint(pos_mouse) or boton2_rect.collidepoint(pos_mouse) or boton3_rect.collidepoint(pos_mouse) or boton4_rect.collidepoint(pos_mouse) or logo_UNViMe_rect.collidepoint(pos_mouse):
-    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Cambiar a cursor "manito"
-  else:
-    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)  # Volver al cursor normal
+  update_cursor(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
 
   if boton1_rect.collidepoint(pos_mouse):
     boton_juego1 = pygame.image.load('img/boton_juego1_hover.png')
