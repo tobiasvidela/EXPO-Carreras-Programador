@@ -6,7 +6,7 @@
 Este proyecto consiste en el desarrollo de una serie de juegos en Python, diseñados para demostrar lo que se puede aprender en la carrera de programación. Estos juegos están pensados para ser presentados en la exposición de carreras de nuestra institución y despertar el interés en la programación.
 ## Juegos Incluidos
   - **[Nombre del Juego 1]**: Breve descripción del juego 1.
-  - **[Nombre del Juego 2]**: Breve descripción del juego 2.
+  - **SNAKE GAME**: El objetivo del juego es mover una serpiente por la pantalla para recolectar comida, lo que hará que la serpiente crezca en longitud. El jugador controla la dirección de la serpiente usando las flechas del teclado.
   - **[Nombre del Juego 3]**: Breve descripción del juego 3.
   - **Pong**: El clásico juego bidimensional que simula el tenis de mesa. El jugador controla una paleta en el juego, moviéndola hacia arriba y hacia abajo en el lado izquierdo o derecho de la pantalla, con el objetivo de anotar diez puntos antes que su oponente.
 
