@@ -22,14 +22,14 @@ icon_path = 'img/ESCUDO-UNViMe.png'
 caption = "Expo Carreras - Programación"
 logo_UNViMe_path = 'img/LOGO-UNViMe-BLANCO-PIE.png'
 
-boton_juego1_path = 'img/boton_juego1.png'
-boton_juego2_path = 'img/boton_juego2.png'
-boton_juego3_path = 'img/boton_juego3.png'
-boton_juego4_path = 'img/boton_juego4.png'
-boton_juego1_hover_path = 'img/boton_juego1_hover.png'
-boton_juego2_hover_path = 'img/boton_juego2_hover.png'
-boton_juego3_hover_path = 'img/boton_juego3_hover.png'
-boton_juego4_hover_path = 'img/boton_juego4_hover.png'
+boton_juego1_path = './img/boton_juego1.png'
+boton_juego2_path = './img/boton_juego2.png'
+boton_juego3_path = './img/boton_juego3.png'
+boton_juego4_path = './img/boton_juego4.png'
+boton_juego1_hover_path = './img/boton_juego1_hover.png'
+boton_juego2_hover_path = './img/boton_juego2_hover.png'
+boton_juego3_hover_path = './img/boton_juego3_hover.png'
+boton_juego4_hover_path = './img/boton_juego4_hover.png'
 
 # Colores
 BLANCO = (255, 255, 255)

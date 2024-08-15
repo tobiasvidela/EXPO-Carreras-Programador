@@ -17,19 +17,19 @@ AZUL = (0, 0, 255)
 #YELLOW = (255, 255, 0)
 
 # SONIDOS
-hit = pygame.mixer.Sound('pong/sound/hit.mp3')
+hit = pygame.mixer.Sound('./pong/sound/hit.mp3')
 pygame.mixer.Sound.set_volume(hit, 0.7)
 
-point = pygame.mixer.Sound('pong/sound/point.mp3')
+point = pygame.mixer.Sound('./pong/sound/point.mp3')
 pygame.mixer.Sound.set_volume(point, 0.8)
 
-win = pygame.mixer.Sound('pong/sound/win.mp3')
+win = pygame.mixer.Sound('./pong/sound/win.mp3')
 pygame.mixer.Sound.set_volume(win, 0.6)
 
 # VENTANA
 ANCHO, ALTO = 800, 400
 pantalla = pygame.display.set_mode((ANCHO, ALTO))
-pong_icon = pygame.image.load('pong/img/pong_icon.png')
+pong_icon = pygame.image.load('./pong/img/pong_icon.png')
 pygame.display.set_icon(pong_icon)
 pygame.display.set_caption("PONG!")
 
@@ -43,13 +43,13 @@ framerate = 300
 #   MENU DEL JUEGO
 # Botones del menu de Pong
 botones_ancho, botones_alto = 300, 300
-button_1P = pygame.image.load('pong/img/button_1P.svg')
+button_1P = pygame.image.load('./pong/img/button_1P.svg')
 button_1P = pygame.transform.scale(button_1P, (botones_ancho + 100, botones_alto + 100))
 
-button_2P = pygame.image.load('pong/img/button_2P.png')
+button_2P = pygame.image.load('./pong/img/button_2P.png')
 button_2P = pygame.transform.scale(button_2P, (botones_ancho, botones_alto))
 
-button_salir = pygame.image.load('pong/img/button_salir.png')
+button_salir = pygame.image.load('./pong/img/button_salir.png')
 button_salir = pygame.transform.scale(button_salir, (50, 50))
 
 #   PONG variables
@@ -93,7 +93,7 @@ def set_ventana_pong(modo: str) -> pygame.display:
 
 def dibujar_menu():
   pantalla.fill(NEGRO)
-  pong_icon = pygame.image.load('pong/img/pong_icon.png')
+  pong_icon = pygame.image.load('./pong/img/pong_icon.png')
   pygame.display.set_icon(pong_icon)
   pygame.display.set_caption("PONG!")
   
