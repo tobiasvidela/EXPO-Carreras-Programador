@@ -20,7 +20,7 @@ bg_music_3 = './music/bg-music-3.mp3'
 selected_path = './sound/selected.mp3'
 icon_path = 'img/ICONO_CLUB.png'
 caption = "Expo Carreras - Club de Programación UNViMe"
-logo_UNViMe_path = 'img/LOGO_CLUB_LONG.png'
+logo_path = 'img/LOGO_CLUB_LONG.png'
 
 boton_juego1_path = './img/boton_juego1.png'
 boton_juego2_path = './img/boton_juego2.png'
@@ -58,8 +58,8 @@ pygame.display.set_icon(icono)
 pygame.display.set_caption(caption)
 
 # Cargar la imagen del título
-logo_UNViMe = pygame.image.load(logo_UNViMe_path)
-logo_UNViMe_rect = logo_UNViMe.get_rect()
+logo = pygame.image.load(logo_path)
+logo_rect = logo.get_rect()
 
 # Cargar y redimensionar las imágenes para los botones
 botones_ancho, botones_alto = 110, 110
@@ -80,8 +80,8 @@ def dibujar_menu():
   global pantalla
   pantalla.fill(NEGRO)
 
-  logo_UNViMe_rect.center = (ANCHO // 2, 75)
-  pantalla.blit(logo_UNViMe, logo_UNViMe_rect)
+  logo_rect.center = (ANCHO // 2, 75)
+  pantalla.blit(logo, logo_rect)
 
   # Dibujar botones con imágenes
   boton1_rect = pantalla.blit(boton_juego1, (ANCHO // 2 - boton_juego1.get_width() * 1.25, 165))
@@ -149,42 +149,46 @@ def sonido_boton(selected):
   pygame.time.delay(150)
   pygame.mixer.Sound.play(selected)
 
-# Bucle principal
-while True:
-  pygame.mixer.music.set_volume(0.2)
-  pygame.mixer.music.unpause()
-  
-  boton1_rect, boton2_rect, boton3_rect, boton4_rect = dibujar_menu()
+def main():
+  global boton_juego1, boton_juego2, boton_juego3, boton_juego4
+  while True:
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.unpause()
+    
+    boton1_rect, boton2_rect, boton3_rect, boton4_rect = dibujar_menu()
 
-  pos_mouse = pygame.mouse.get_pos()
+    pos_mouse = pygame.mouse.get_pos()
 
-  update_cursor(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
+    update_cursor(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
 
-  boton_juego1, boton_juego2, boton_juego3, boton_juego4 = update_button(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
+    boton_juego1, boton_juego2, boton_juego3, boton_juego4 = update_button(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect)
 
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      pygame.quit()
-      sys.exit()
-    if event.type == pygame.MOUSEBUTTONDOWN:
-      # Click en boton
-      sonido_boton(selected)
+    for event in pygame.event.get():
+      if event.type == pygame.QUIT:
+        pygame.quit()
+        sys.exit()
+      if event.type == pygame.MOUSEBUTTONDOWN:
+        # Click en boton
+        sonido_boton(selected)
 
-      if boton1_rect.collidepoint(event.pos):
-        jugando = True
-        # juegoBRAIAM()
-      elif boton2_rect.collidepoint(event.pos):
-        jugando = True
-        # juegoEZEyMARTI()
-      elif boton3_rect.collidepoint(event.pos):
-        jugando = True
-        # juegoNICO()
-      elif boton4_rect.collidepoint(event.pos):
-        jugando = True
-        print("Running Pong")
-        runPong(jugando, ANCHO, ALTO)
-        set_menu(ANCHO, ALTO, icon_path, bg_music_2)
-      elif logo_UNViMe_rect.collidepoint(event.pos):
-        webbrowser.open('https://www.unvime.edu.ar')
-        print("Logo clickeado, abriendo página web...")
-  pygame.display.update()
+        if boton1_rect.collidepoint(event.pos):
+          jugando = True
+          # juegoBRAIAM()
+        elif boton2_rect.collidepoint(event.pos):
+          jugando = True
+          # juegoEZEyMARTI()
+        elif boton3_rect.collidepoint(event.pos):
+          jugando = True
+          # juegoNICO()
+        elif boton4_rect.collidepoint(event.pos):
+          jugando = True
+          print("Running Pong")
+          runPong(jugando, ANCHO, ALTO)
+          set_menu(ANCHO, ALTO, icon_path, bg_music_2)
+        elif logo_rect.collidepoint(event.pos):
+          webbrowser.open('https://www.unvime.edu.ar')
+          print("Logo clickeado, abriendo página web...")
+    pygame.display.update()
+
+if __name__ == '__main__':
+  main()
