@@ -11,6 +11,26 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 #   VARIABLES GLOBALES
 jugando = True
+
+# Rutas
+bg_music_1 = './music/bg-music-1.mp3'
+bg_music_2 = './music/bg-music-2.mp3'
+bg_music_3 = './music/bg-music-3.mp3'
+
+selected_path = './sound/selected.mp3'
+icon_path = 'img/ESCUDO-UNViMe.png'
+caption = "Expo Carreras - Programación"
+logo_UNViMe_path = 'img/LOGO-UNViMe-BLANCO-PIE.png'
+
+boton_juego1_path = 'img/boton_juego1.png'
+boton_juego2_path = 'img/boton_juego2.png'
+boton_juego3_path = 'img/boton_juego3.png'
+boton_juego4_path = 'img/boton_juego4.png'
+boton_juego1_hover_path = 'img/boton_juego1_hover.png'
+boton_juego2_hover_path = 'img/boton_juego2_hover.png'
+boton_juego3_hover_path = 'img/boton_juego3_hover.png'
+boton_juego4_hover_path = 'img/boton_juego4_hover.png'
+
 # Colores
 BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)
@@ -23,36 +43,36 @@ YELLOW = (255, 255, 0)
 
 #   SOUNDS
 pygame.mixer.music.unload()
-pygame.mixer.music.load('./music/bg-music-2.mp3')
-pygame.mixer.music.set_volume(0.15)
+pygame.mixer.music.load(bg_music_2)
+pygame.mixer.music.set_volume(0.2)
 pygame.mixer.music.play(loops=-1, fade_ms=150)
 
-selected = pygame.mixer.Sound('./sound/selected.mp3')
-pygame.mixer.Sound.set_volume(selected, 0.99)
+selected = pygame.mixer.Sound(selected_path)
+pygame.mixer.Sound.set_volume(selected, 1)
 
 #   Configuraciones de la ventana del menú principal
 ANCHO, ALTO = 720, 480
 pantalla = pygame.display.set_mode((ANCHO, ALTO))
-icono = pygame.image.load('img/ESCUDO-UNViMe.png')
+icono = pygame.image.load(icon_path)
 pygame.display.set_icon(icono)
-pygame.display.set_caption("Expo Carreras - Programación")
+pygame.display.set_caption(caption)
 
 # Cargar la imagen del título
-logo_UNViMe = pygame.image.load('img/LOGO-UNViMe-BLANCO-PIE.png')
+logo_UNViMe = pygame.image.load(logo_UNViMe_path)
 logo_UNViMe_rect = logo_UNViMe.get_rect()
 
 # Cargar y redimensionar las imágenes para los botones
 botones_ancho, botones_alto = 110, 110
-boton_juego1 = pygame.image.load('img/boton_juego1.png')
+boton_juego1 = pygame.image.load(boton_juego1_path)
 boton_juego1 = pygame.transform.scale(boton_juego1, (botones_ancho, botones_alto))
 
-boton_juego2 = pygame.image.load('img/boton_juego2.png')
+boton_juego2 = pygame.image.load(boton_juego2_path)
 boton_juego2 = pygame.transform.scale(boton_juego2, (botones_ancho, botones_alto))
 
-boton_juego3 = pygame.image.load('img/boton_juego3.png')
+boton_juego3 = pygame.image.load(boton_juego3_path)
 boton_juego3 = pygame.transform.scale(boton_juego3, (botones_ancho, botones_alto))
 
-boton_juego4 = pygame.image.load('img/boton_juego4.png')
+boton_juego4 = pygame.image.load(boton_juego4_path)
 boton_juego4 = pygame.transform.scale(boton_juego4, (botones_ancho, botones_alto))
 
 # Función para dibujar el menú
@@ -86,41 +106,40 @@ def update_cursor(pos_mouse, *args: pygame.image) -> None:
 
 def update_button(pos_mouse, boton1_rect, boton2_rect, boton3_rect, boton4_rect):
   if boton1_rect.collidepoint(pos_mouse):
-    boton_juego1 = pygame.image.load('img/boton_juego1_hover.png')
+    boton_juego1 = pygame.image.load(boton_juego1_hover_path)
     boton_juego1 = pygame.transform.scale(boton_juego1, (botones_ancho, botones_alto))
   else:
-    boton_juego1 = pygame.image.load('img/boton_juego1.png')
+    boton_juego1 = pygame.image.load(boton_juego1_path)
     boton_juego1 = pygame.transform.scale(boton_juego1, (botones_ancho, botones_alto))
 
   if boton2_rect.collidepoint(pos_mouse):
-    boton_juego2 = pygame.image.load('img/boton_juego2_hover.png')
+    boton_juego2 = pygame.image.load(boton_juego2_hover_path)
     boton_juego2 = pygame.transform.scale(boton_juego2, (botones_ancho, botones_alto))
   else:
-    boton_juego2 = pygame.image.load('img/boton_juego2.png')
+    boton_juego2 = pygame.image.load(boton_juego2_path)
     boton_juego2 = pygame.transform.scale(boton_juego2, (botones_ancho, botones_alto))
 
   if boton3_rect.collidepoint(pos_mouse):
-    boton_juego3 = pygame.image.load('img/boton_juego3_hover.png')
+    boton_juego3 = pygame.image.load(boton_juego3_hover_path)
     boton_juego3 = pygame.transform.scale(boton_juego3, (botones_ancho, botones_alto))
   else:
-    boton_juego3 = pygame.image.load('img/boton_juego3.png')
+    boton_juego3 = pygame.image.load(boton_juego3_path)
     boton_juego3 = pygame.transform.scale(boton_juego3, (botones_ancho, botones_alto))
 
   if boton4_rect.collidepoint(pos_mouse):
-    boton_juego4 = pygame.image.load('img/boton_juego4_hover.png')
+    boton_juego4 = pygame.image.load(boton_juego4_hover_path)
     boton_juego4 = pygame.transform.scale(boton_juego4, (botones_ancho, botones_alto))
   else:
-    boton_juego4 = pygame.image.load('img/boton_juego4.png')
+    boton_juego4 = pygame.image.load(boton_juego4_path)
     boton_juego4 = pygame.transform.scale(boton_juego4, (botones_ancho, botones_alto))
   
   return boton_juego1, boton_juego2, boton_juego3, boton_juego4
-
 
 def set_menu(ANCHO, ALTO, icon_path, music_path):
   pantalla = pygame.display.set_mode((ANCHO, ALTO))
   icono = pygame.image.load(icon_path)
   pygame.display.set_icon(icono)
-  pygame.display.set_caption("Expo Carreras - Programación")
+  pygame.display.set_caption(caption)
   pygame.mixer.music.unload()
   pygame.mixer.music.load(music_path)
   pygame.mixer.music.play()
@@ -163,7 +182,7 @@ while True:
         jugando = True
         print("Running Pong")
         runPong(jugando, ANCHO, ALTO)
-        set_menu(ANCHO, ALTO, 'img/ESCUDO-UNViMe.png', './music/bg-music-2.mp3')
+        set_menu(ANCHO, ALTO, icon_path, bg_music_2)
       elif logo_UNViMe_rect.collidepoint(event.pos):
         webbrowser.open('https://www.unvime.edu.ar')
         print("Logo clickeado, abriendo página web...")
