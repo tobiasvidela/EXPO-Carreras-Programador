@@ -26,13 +26,14 @@ cabeza.goto(0, 0)
 cabeza.direction = "stop"
 
 # Cargar la imagen de comida
-#wn.addshape("comida.gif") # fix para más tarde
+wn.addshape("comida.gif") # fix para más tarde
 
-# Comida sin imagen personalizada
+# Comida con imagen personalizada
 comida = turtle.Turtle()
 comida.speed(0)
-comida.shape("circle")
-comida.color("red")
+comida.shape("comida.gif") # ejecutar desde la ruta correcta
+#comida.shape("circle") # alternativa a la uvita de "comdia.gif"
+#comida.color("red")
 comida.penup()
 comida.goto(0, 100)
 # Segmentos
