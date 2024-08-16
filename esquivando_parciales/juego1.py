@@ -1,15 +1,15 @@
 import pygame # importamos el modulo
-from personaje import Cubo #importamos el personaje Cubo del archivo personaje
-from enemigo import Enemigo #importamos el personaje Enemigo del archivo enemigo
+from esquivando_parciales.personaje import Cubo #importamos el personaje Cubo del archivo personaje
+from esquivando_parciales.enemigo import Enemigo #importamos el personaje Enemigo del archivo enemigo
 import random # importamos el modulo
 import sys
 
 pygame.init() # inicializando modulos de pygame
 pygame.mixer.init() # inicializando modulos de pygame mixer
 
-sonido_colision = pygame.mixer.Sound("vine-boom.mp3") # cargar sonido de colision
+sonido_colision = pygame.mixer.Sound("esquivando_parciales/vine-boom.mp3") # cargar sonido de colision
 #sonido_fondo = pygame.mixer.Sound("oacrna.mp3")
-pygame.mixer.music.load("oacrna.mp3") # cargar sonido de fondo
+pygame.mixer.music.load("esquivando_parciales/oacrna.mp3") # cargar sonido de fondo
 pygame.mixer.music.play(-1) # reproducir musica de fondo 
 
 ANCHO = 1300 # ancho de nuestra ventana
@@ -34,7 +34,7 @@ enemigos = []
 enemigos.append(Enemigo(ANCHO / 2, 100, 50, 60)) # lugar donde aparecen los enemigos en la pantalla
 
 # Carga y escala de la imagen de fondo
-fondo = pygame.image.load("IMG-20230605-WA0029.jpg").convert()
+fondo = pygame.image.load("esquivando_parciales/IMG-20230605-WA0029.jpg").convert()
 fondo = pygame.transform.scale(fondo, (ANCHO, ALTO))
 
 def gestionar_teclas(teclas):
@@ -137,4 +137,4 @@ def esquivando_parciales(jugando,main_ancho,main_alto):
     jugando = False # cerramos el programa
     VENTANA = pygame.display.set_mode([main_ancho, main_alto]) # actualizo la pantalla
 
-esquivando_parciales(jugando,ANCHO,ALTO)
+#esquivando_parciales(jugando,ANCHO,ALTO)

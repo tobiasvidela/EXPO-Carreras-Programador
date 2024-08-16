@@ -1,6 +1,7 @@
 import pygame, sys, os, random, webbrowser
 
 # imports de funciones que inician los juegos
+from esquivando_parciales.juego1 import esquivando_parciales
 
 # Inicializar Pygame
 pygame.init()
@@ -115,8 +116,9 @@ while True:
         jugando = True
         # juegoEZEyMARTI()
       elif boton3_rect.collidepoint(event.pos):
+        print("iniciando juego")
         jugando = True
-        # juegoNICO()
+        esquivando_parciales(jugando,ANCHO,ALTO)
       elif boton4_rect.collidepoint(event.pos):
         jugando = True
         # juegoTOBI()
