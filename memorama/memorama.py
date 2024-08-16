@@ -12,6 +12,7 @@ sonido_clic = pygame.mixer.Sound('imagenes_memorama/voltear.wav')
 sonido_pareja = pygame.mixer.Sound('imagenes_memorama/ganador.wav')  
 sonido_no_pareja = pygame.mixer.Sound('imagenes_memorama/equivocado.wav') 
 sonido_ganador = pygame.mixer.Sound('imagenes_memorama/win.mp3')
+pygame.mixer.Sound.set_volume(sonido_ganador, 0.6)
 
 def shuffle(arr):
     last_index = len(arr) - 1
@@ -62,7 +63,7 @@ def reiniciar_juego():
     etiqueta_intentos.config(text="Intentos : " + str(intentos))
 
 def eleccion(n):
-    global contador_gana, posiciones, emparejados, intentos, ventana, mensaje_felicitacion
+    global contador_gana, posiciones, emparejados, intentos, ventana, mensaje_felicitacion, etiqueta_intentos
 
     # Reproduce sonido de clic
     sonido_clic.play()
@@ -127,35 +128,42 @@ imapreg = tkinter.PhotoImage(file="imagenes_memorama/logo unvime.png")
 
 imagenes = [imagen0, imagen1, imagen2, imagen3, imagen4, imagen5, imagen0, imagen1, imagen2, imagen3, imagen4, imagen5]
 
-# Inicializar juego
-barajeado = shuffle(imagenes)
-intentos = 0
-contador_gana = 0
-posiciones = [None, None]
-emparejados = []
-mensaje_felicitacion = None
+def main(jugando: bool):
+    global imagenes, contador_gana, posiciones, emparejados, intentos, etiqueta_intentos, ventana, mensaje_felicitacion, intentos, barajeado, botones, boton_reinicio
 
-# Crear botones
-botones = []
-for i in range(12):
-    boton = tkinter.Button(ventana, image=imapreg, width="180", height="180", command=lambda numelec=i: eleccion(numelec))
-    botones.append(boton)
+    while jugando:
+        # Inicializar juego
+        barajeado = shuffle(imagenes)
+        intentos = 0
+        contador_gana = 0
+        posiciones = [None, None]
+        emparejados = []
+        mensaje_felicitacion = None
 
-c = 0
-for x in range(3):
-    for y in range(4):
-        botones[c].grid(row=x, column=y, padx=25, pady=25)
-        c += 1
+        # Crear botones
+        botones = []
+        for i in range(12):
+            boton = tkinter.Button(ventana, image=imapreg, width="180", height="180", command=lambda numelec=i: eleccion(numelec))
+            botones.append(boton)
+
+        c = 0
+        for x in range(3):
+            for y in range(4):
+                botones[c].grid(row=x, column=y, padx=25, pady=25)
+                c += 1
 
 
-# Etiqueta de intentos
-etiqueta_intentos = tkinter.Label(ventana, text="Intentos : " + str(intentos), font=("Impact", 30), bg="RoyalBlue4", fg="white")
-etiqueta_intentos.place(x=965, y=350)
+        # Etiqueta de intentos
+        etiqueta_intentos = tkinter.Label(ventana, text="Intentos : " + str(intentos), font=("Impact", 30), bg="RoyalBlue4", fg="white")
+        etiqueta_intentos.place(x=965, y=350)
 
-# Botón de reinicio
-boton_reinicio = tkinter.Button(ventana, text="Reiniciar Juego", font=("Impact", 30), command=reiniciar_juego)
+        # Botón de reinicio
+        boton_reinicio = tkinter.Button(ventana, text="Reiniciar Juego", font=("Impact", 30), command=reiniciar_juego)
 
-ventana.mainloop()
+        ventana.mainloop()
 
-# Cierra pygame al salir
-pygame.quit()
+        # Cerrar
+        jugando = False
+
+if __name__ == '__main__':
+    main(True)
