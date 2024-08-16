@@ -10,11 +10,11 @@ pygame.mixer.init() # inicializando modulos de pygame mixer
 sonido_colision = pygame.mixer.Sound("esquivando_parciales/vine-boom.mp3") # cargar sonido de colision
 #sonido_fondo = pygame.mixer.Sound("oacrna.mp3")
 pygame.mixer.music.load("esquivando_parciales/oacrna.mp3") # cargar sonido de fondo
-pygame.mixer.music.play(-1) # reproducir musica de fondo 
+#pygame.mixer.music.play(-1) # reproducir musica de fondo 
 
 ANCHO = 1300 # ancho de nuestra ventana
 ALTO = 700 # alto de nuestra ventana
-VENTANA = pygame.display.set_mode([ANCHO, ALTO]) # pygame para lo que tiene que ver a la libreria, display para la pantalla y en set mode el tamaño
+#VENTANA = pygame.display.set_mode([ANCHO, ALTO]) # pygame para lo que tiene que ver a la libreria, display para la pantalla y en set mode el tamaño
 FPS = 60 
 FUENTE = pygame.font.SysFont("impact", 40) # fuente de la letra que muestra las vidas y los puntos
 
@@ -28,14 +28,7 @@ puntos = 0 # variable de puntos iniciada en 0
 tiempo_pasado = 0
 tiempo_entre_enemigos = 400
 
-cubo = Cubo(ANCHO / 2, 623, 80, 60) # ubicacion de nuestro personaje en la pantalla
 
-enemigos = []
-enemigos.append(Enemigo(ANCHO / 2, 100, 50, 60)) # lugar donde aparecen los enemigos en la pantalla
-
-# Carga y escala de la imagen de fondo
-fondo = pygame.image.load("esquivando_parciales/IMG-20230605-WA0029.jpg").convert()
-fondo = pygame.transform.scale(fondo, (ANCHO, ALTO))
 
 def gestionar_teclas(teclas):
 
@@ -68,6 +61,15 @@ def esquivando_parciales(jugando):
     pygame.mixer.music.unload()
     pygame.mixer.music.load("esquivando_parciales/oacrna.mp3")
     pygame.mixer.music.play(-1)
+
+    cubo = Cubo(ANCHO / 2, 623, 80, 60) # ubicacion de nuestro personaje en la pantalla
+
+    enemigos = []
+    enemigos.append(Enemigo(ANCHO / 2, 100, 50, 60)) # lugar donde aparecen los enemigos en la pantalla
+
+    # Carga y escala de la imagen de fondo
+    fondo = pygame.image.load("esquivando_parciales/IMG-20230605-WA0029.jpg").convert()
+    fondo = pygame.transform.scale(fondo, (ANCHO, ALTO))
     
     # reset a Parámetros iniciales
     tiempo_pasado = 0
@@ -115,8 +117,6 @@ def esquivando_parciales(jugando):
             if evento.type == pygame.KEYDOWN:
                 if teclas[pygame.K_ESCAPE]:
                     jugando = False
-                    VENTANA = pygame.display.set_mode([ANCHO, ALTO])
-
 
         VENTANA.blit(fondo, (0, 0))  # Dibuja la imagen de fondo
 
