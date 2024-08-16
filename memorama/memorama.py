@@ -8,10 +8,10 @@ pygame.init()
 pygame.mixer.init()
 
 # Carga archivos de sonido
-sonido_clic = pygame.mixer.Sound('imagenes_memorama/voltear.wav')  
-sonido_pareja = pygame.mixer.Sound('imagenes_memorama/ganador.wav')  
-sonido_no_pareja = pygame.mixer.Sound('imagenes_memorama/equivocado.wav') 
-sonido_ganador = pygame.mixer.Sound('imagenes_memorama/win.mp3')
+sonido_clic = pygame.mixer.Sound('./memorama/imagenes_memorama/voltear.wav')  
+sonido_pareja = pygame.mixer.Sound('./memorama/imagenes_memorama/ganador.wav')  
+sonido_no_pareja = pygame.mixer.Sound('./memorama/imagenes_memorama/equivocado.wav') 
+sonido_ganador = pygame.mixer.Sound('./memorama/imagenes_memorama/win.mp3')
 pygame.mixer.Sound.set_volume(sonido_ganador, 0.6)
 
 def shuffle(arr):
@@ -118,13 +118,13 @@ ventana.configure(bg="dark blue")
 ventana.title("MEMORAMA")
 
 # Cargar imágenes
-imagen0 = tkinter.PhotoImage(file="imagenes_memorama/rana.png")
-imagen1 = tkinter.PhotoImage(file="imagenes_memorama/elefante.png")
-imagen2 = tkinter.PhotoImage(file="imagenes_memorama/delfin.png")
-imagen3 = tkinter.PhotoImage(file="imagenes_memorama/aguila.png")
-imagen4 = tkinter.PhotoImage(file="imagenes_memorama/tortuga.png")
-imagen5 = tkinter.PhotoImage(file="imagenes_memorama/tigre.png")
-imapreg = tkinter.PhotoImage(file="imagenes_memorama/logo unvime.png")
+imagen0 = tkinter.PhotoImage(file="./memorama/imagenes_memorama/rana.png")
+imagen1 = tkinter.PhotoImage(file="./memorama/imagenes_memorama/elefante.png")
+imagen2 = tkinter.PhotoImage(file="./memorama/imagenes_memorama/delfin.png")
+imagen3 = tkinter.PhotoImage(file="./memorama/imagenes_memorama/aguila.png")
+imagen4 = tkinter.PhotoImage(file="./memorama/imagenes_memorama/tortuga.png")
+imagen5 = tkinter.PhotoImage(file="./memorama/imagenes_memorama/tigre.png")
+imapreg = tkinter.PhotoImage(file="./memorama/imagenes_memorama/logo unvime.png")
 
 imagenes = [imagen0, imagen1, imagen2, imagen3, imagen4, imagen5, imagen0, imagen1, imagen2, imagen3, imagen4, imagen5]
 
