@@ -1,8 +1,9 @@
 import pygame, sys, os, random, webbrowser
 
 # imports de funciones que inician los juegos
-from pong.pong import runPong
 from esquivando_parciales.juego1 import esquivando_parciales
+from memorama.memorama import memorama
+from pong.pong import runPong
 
 # Inicializar Pygame
 pygame.init()
@@ -162,10 +163,9 @@ def main():
 
         if boton1_rect.collidepoint(event.pos):
           jugando = True
-          # juegoBRAIAM()
+          memorama(jugando)
         elif boton2_rect.collidepoint(event.pos):
           jugando = True
-          print("Running Pong")
           runPong(jugando, ANCHO, ALTO)
           set_menu(ANCHO, ALTO, icon_path, bg_music_2)
         elif boton3_rect.collidepoint(event.pos):

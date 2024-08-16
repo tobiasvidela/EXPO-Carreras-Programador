@@ -128,7 +128,7 @@ imapreg = tkinter.PhotoImage(file="./memorama/imagenes_memorama/logo unvime.png"
 
 imagenes = [imagen0, imagen1, imagen2, imagen3, imagen4, imagen5, imagen0, imagen1, imagen2, imagen3, imagen4, imagen5]
 
-def main(jugando: bool):
+def memorama(jugando):
     global imagenes, contador_gana, posiciones, emparejados, intentos, etiqueta_intentos, ventana, mensaje_felicitacion, intentos, barajeado, botones, boton_reinicio
 
     while jugando:
@@ -166,4 +166,4 @@ def main(jugando: bool):
         jugando = False
 
 if __name__ == '__main__':
-    main(True)
+    memorama(True)
