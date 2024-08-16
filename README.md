@@ -5,10 +5,10 @@
 
 Este proyecto consiste en el desarrollo de una serie de juegos en Python, diseñados para demostrar lo que se puede aprender en la carrera de programación. Estos juegos están pensados para ser presentados en la exposición de carreras de nuestra institución y despertar el interés en la programación.
 ## Juegos Incluidos
-  - **[Nombre del Juego 1]**: Breve descripción del juego 1.
+  - **MEMORAMA**:El memorama es un juego que desafía la memoria de los jugadores. El objetivo es encontrar pares de cartas iguales. Los jugadores deben voltear dos cartas en cada turno, intentando recordar la ubicación de las cartas para hacer coincidir los pares. El juego continúa hasta que todos los pares han sido encontrados.Es un excelente ejercicio para mejorar la memoria y la concentración, además de ser divertido y fácil de aprender.
   - **SNAKE GAME**: El objetivo del juego es mover una serpiente por la pantalla para recolectar comida, lo que hará que la serpiente crezca en longitud. El jugador controla la dirección de la serpiente usando las flechas del teclado.
-  - **Esquivando parciales**: intenta terminar la carrera sin rendir parciales.
-  - **Pong**: El clásico juego bidimensional que simula el tenis de mesa. El jugador controla una paleta en el juego, moviéndola hacia arriba y hacia abajo en el lado izquierdo o derecho de la pantalla, con el objetivo de anotar diez puntos antes que su oponente.
+  - **ESQUIVANDO PARCIALES**: intenta terminar la carrera sin rendir parciales.
+  - **PONG**: El clásico juego bidimensional que simula el tenis de mesa. El jugador controla una paleta en el juego, moviéndola hacia arriba y hacia abajo en el lado izquierdo o derecho de la pantalla, con el objetivo de anotar diez puntos antes que su oponente.
 
 ## Colaboradores
 Este proyecto está siendo desarrollado por un equipo de 5 programadores:
